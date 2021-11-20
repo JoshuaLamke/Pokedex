@@ -1,0 +1,28 @@
+#pokemon-image {
+    width: 30%;
+    height: auto;
+}
+
+.list-group {
+    width: 25%;
+}
+
+.card {
+    width: 25%;
+}
+
+@media Screen and (max-width: 50em) {
+    #pokemon-image {
+        width: 60%;
+        height: auto;
+    }
+
+    .list-group {
+        width: 50%!important;
+    }
+
+    .card {
+        width: 50%!important;
+    }
+}
+

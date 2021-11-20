@@ -1,0 +1,21 @@
+#pokemon-img, #custom-pokemon-img {
+    width: 30vw;
+    height: auto;
+}
+
+.list-group {
+    width: 25%;
+}
+
+@media Screen and (max-width: 50em) {
+    #pokemon-img, #custom-pokemon-img {
+        width: 60%;
+        height: auto;
+    }
+
+    .list-group {
+        width: 50%!important;
+    }
+
+}
+

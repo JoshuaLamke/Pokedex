@@ -1,0 +1,50 @@
+.form-label {
+    margin: 20px 0px;
+    color: rgb(176,38,255);
+}
+
+.form-field {
+    border: 1px solid rgb(176,38,255);
+}
+
+.create-form-container {
+    width: 75%;
+}
+
+.form-field:focus {
+    box-shadow: inset 0px 0px 10px rgba(176,38,255, 0.5);
+    color: rgb(176,38,255);
+}
+
+.form-field::placeholder {
+    color: rgb(176,38,255);
+}
+
+.stat-grid {
+    display: grid;
+    gap: 16px;
+    padding: 16px;
+    grid-template-columns: repeat(1, 1fr);
+}
+
+.hidden {
+    display: none!important;
+}
+
+@media Screen and (min-width: 500px) {
+    .stat-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }    
+}
+
+@media Screen and (min-width: 768px) {
+    .stat-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }    
+}
+
+@media Screen and (max-width: 350px) {
+    .create-form-container {
+        width: 100%;
+    }
+}

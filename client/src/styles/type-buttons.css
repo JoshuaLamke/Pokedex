@@ -1,0 +1,40 @@
+.type-button {
+    width: 85px;
+    height: 30px;
+    border-radius: 5px;
+    outline: none;
+}
+
+.black {
+    color: rgb(0, 0, 0)!important;
+}
+
+.type-button:hover, .type-button:active {
+    transform: scale(1.03);
+    transition: all .2s ease-in;
+}
+
+.type-grid {
+    display: grid;
+    gap: 16px;
+    padding: 16px;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+@media Screen and (min-width: 500px) {
+    .type-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }    
+}
+
+@media Screen and (min-width: 768px) {
+    .type-grid {
+        grid-template-columns: repeat(6, 1fr);
+    }    
+}
+
+@media Screen and (min-width: 1200px) {
+    .type-grid {
+        grid-template-columns: repeat(9, 1fr);
+    }    
+}

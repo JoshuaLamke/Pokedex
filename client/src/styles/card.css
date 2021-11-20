@@ -1,0 +1,15 @@
+#card:hover > .card-name-container {
+    transition-duration: .5s;
+    background: rgb(49, 33, 33);
+    border-radius: 20px;
+    z-index: 5;
+}
+
+#card {
+    position: relative;
+}
+
+.card-name-container {
+    background: none;
+    z-index: 1;
+}

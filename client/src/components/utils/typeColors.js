@@ -1,0 +1,20 @@
+export const typeColors = {
+    "Normal": "rgb(168, 168, 120)",
+    "Fire": "rgb(240, 128, 48)",
+    "Water": "rgb(104, 144, 240)",
+    "Grass": "rgb(120, 200, 80)",
+    "Electric": "rgb(248, 208, 48)",
+    "Ice": "rgb(152, 216, 216)",
+    "Fighting": "rgb(192, 48, 40)",
+    "Poison": "rgb(160, 64, 160)",
+    "Ground": "rgb(224, 192, 104)",
+    "Flying": "rgb(168, 144, 240)",
+    "Psychic": "rgb(248, 88, 136)",
+    "Bug": "rgb(168, 184, 32)",
+    "Rock": "rgb(184, 160, 56)",
+    "Ghost": "rgb(112, 88, 152)",
+    "Dark": "rgb(112, 88, 72)",
+    "Dragon": "rgb(112, 56, 248)",
+    "Steel": "rgb(113, 121, 126)",
+    "Fairy": "rgb(240, 182, 188)"
+}

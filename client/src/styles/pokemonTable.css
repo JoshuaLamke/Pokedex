@@ -1,0 +1,7 @@
+.body-rows {
+    cursor: pointer;
+}
+.body-rows:hover {
+    transform: scale(1.01);
+    transition: all .2s ease-in;
+}
