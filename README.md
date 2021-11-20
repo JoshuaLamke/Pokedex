@@ -1,6 +1,6 @@
 # Pokedex Application
 
-* **Heroku Deployment URL:** http://joshua-lamke-swe432-hw4.herokuapp.com
+* **Heroku Deployment URL:** http://pokedex-jl.herokuapp.com
 
 ### Documentation
 
