@@ -23,7 +23,7 @@ admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
 });
 let db = admin.firestore();
-
+ 
 app.get('/', (req, res) => {
   res.status(200).json({response: 'Hello World!'})
 })
