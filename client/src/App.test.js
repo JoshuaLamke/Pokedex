@@ -10,7 +10,7 @@ afterEach(() => {
 describe("App.js render tests", () => {
     it("App renders correctly", () => {
         render(<App />);
-        expect(screen.getAllByText("Pokedex")[0]).toBeInTheDocument();
+        expect(screen.getAllByText("Home")).toBeInTheDocument();
     })
 })
 
