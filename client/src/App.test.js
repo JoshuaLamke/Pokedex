@@ -10,7 +10,7 @@ afterEach(() => {
 describe("App.js render tests", () => {
     it("App renders correctly", () => {
         render(<App />);
-        expect(screen.getAllByText("Home")).toBeInTheDocument();
+        expect(screen.getByText("Home")).toBeInTheDocument();
     })
 })
 
@@ -75,7 +75,6 @@ describe("Create Pokemon Tests", () => {
 
     it("Navbar text should be visible", async () => {
         render(<Form />);
-        expect(screen.getByText(/pokedex/i)).toHaveTextContent(/pokedex/i);
         expect(screen.getByText(/home/i)).toHaveTextContent(/home/i);
     })
 
