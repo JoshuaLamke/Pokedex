@@ -1,6 +1,6 @@
 body {
     background-image: url("../assets/container_bg.png");
-    font-family: "cursive";
+    font-family: 'Alegreya', serif;
 }
 
 .btn:hover {

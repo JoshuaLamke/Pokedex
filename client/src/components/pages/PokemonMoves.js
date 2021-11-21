@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import PokemonTable from '../table/PokemonTable';
-import { MOVE_COLUMNS } from '../utils/moveColumns';
 import { useLocation, useHistory } from 'react-router-dom';
 import { capitalize } from '../utils/utility';
 import NavBar from '../sub-components/NavBar';
-import Switch from 'react-switch';
 import MoveCardContainer from "../sub-components/MoveCardContainer";
 import CardFilter from '../sub-components/CardFilter';
 import Footer from '../sub-components/Footer';
@@ -16,9 +13,7 @@ const PokemonMoves = () => {
     const moves = location.state.moves;
     const pictureURL = location.state.url;
     const pokemonName = location.state.name;
-    const [tabular, setTabular] = useState(false);
     const id = location.state.id;
-    const pageSize = 4;
     const [cardPageSize, setCardPageSize] = useState(4);
     const [filter, setFilter] = useState();
 
@@ -43,12 +38,6 @@ const PokemonMoves = () => {
         }
     }, [moves])
 
-    // Routes to specific move detail page on a table row click
-    const handleRowSelection = (row) => {
-        const moveInfo = moveRows.filter((move) => move.name === row.original.name);
-        history.push('/move/details', {...moveInfo[0], pokemonName: pokemonName, picture: pictureURL, moves: moves, url: pictureURL, id: id});
-    }
-
     return (
         <div 
             style={{
@@ -62,8 +51,7 @@ const PokemonMoves = () => {
                     routes={[
                         {title: "Home", onClick: () => {history.push("/")}}
                     ]}
-                    tabular={tabular}
-                    color={`${tabular ? "#2a75bb" : "rgb(237,41,57)"}`}
+                    color={"rgb(237,41,57)"}
                 />
             }
             {id > 807 ?
@@ -82,38 +70,7 @@ const PokemonMoves = () => {
             }
             {moveRows.length ?
             <div className="d-flex flex-column align-items-center">
-                <h1 style={{color: `${tabular ? "#2a75bb" : "#cc0000"}`}}>Moves For {pokemonName}</h1>
-                <div className="d-flex flex-column align-items-center pb-2">
-                    <h2 
-                        style={{padding: 0, margin: 0, color: `${tabular ? "#2a75bb" : "#cc0000"}`}}
-                    >
-                        <strong>{`${tabular ? "(Tabular)" : "(Card)"}`}</strong>
-                    </h2>
-                    <Switch  
-                        className="mt-2"
-                        onChange={() => {
-                            setTabular(!tabular);
-                            setFilter("");
-                            setCardPageSize(4);
-                        }} 
-                        checked={tabular} 
-                        onColor={"#2a75bb"} 
-                        offColor={"#cc0000"}
-                        uncheckedIcon={false}
-                        checkedIcon={false}
-                    />
-                </div>
-                {tabular ? 
-                    <div className="container-fluid">
-                        <PokemonTable 
-                            pokemonRows={moveRows} 
-                            pokemonColumns={MOVE_COLUMNS} 
-                            pageSize={pageSize} 
-                            searchText={"Search For Moves:"} 
-                            handleRowSelection={handleRowSelection}
-                        />
-                    </div>
-                :
+                <h1 style={{color: `${"#cc0000"}`}}>Moves For {pokemonName}</h1>
                 <div className="container d-flex flex-column align-items-center">
                     <CardFilter onChange={setCardPageSize} placeholder={"Set cards per page"} type={"number"}/>
                     <CardFilter onChange={setFilter} placeholder={"Search for moves"} type={"text"}/>
@@ -124,7 +81,6 @@ const PokemonMoves = () => {
                         filter={filter ? filter : ""}
                     />
                 </div>
-                }
                 <button 
                     onClick={() => {history.push("/view", {name: pokemonName, id: id})}} 
                     className="btn btn-success mb-2"
@@ -143,7 +99,7 @@ const PokemonMoves = () => {
             {!!moveRows.length && 
                 <>
                     <div style={{flex: 1}}></div>
-                    <Footer color={`${tabular ? "#2a75bb" : "rgb(237,41,57)"}`}/>
+                    <Footer color={`${"rgb(237,41,57)"}`}/>
                 </>
             }
         </div>

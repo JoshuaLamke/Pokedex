@@ -222,8 +222,7 @@ const CreatePokemon = () => {
                                 width: `${page === 4 ? "135px" : "100px"}`, 
                                 background: "rgb(176,38,255)",
                                 boxShadow: "none", 
-                                fontSize: 14, 
-                                fontFamily: "cursive", 
+                                fontSize: 14,
                                 marginRight: `${page === 4 ? "0px" : "5px"}`, 
                                 color: "white"
                             }} 
@@ -240,8 +239,7 @@ const CreatePokemon = () => {
                                 width: "100px", 
                                 background: "rgb(176,38,255)",
                                 boxShadow: "none", 
-                                fontSize: 14, 
-                                fontFamily: "cursive", 
+                                fontSize: 14,
                                 marginRight: "2px", 
                                 color: "white"
                             }} 

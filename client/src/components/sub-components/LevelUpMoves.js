@@ -34,12 +34,11 @@ const LevelUpMoves = ({moves, gameVersion, pokemonInfo}) => {
                         <div 
                             className="d-flex justify-content-between mb-2" 
                             style={{
-                                width: "200px", 
-                                fontFamily: "cursive", 
+                                width: "200px" 
                             }} 
                             key={index}
                         >
-                            <span><strong>{capitalize(move.name)}</strong></span>
+                            <span>{capitalize(move.name)}</span>
                             <span>{move.level}</span>
                         </div> 
                     ))}

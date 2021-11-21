@@ -1,6 +1,7 @@
 import React from 'react';
 import { typeColors } from '../utils/typeColors';
 import '../../styles/type-buttons.css';
+import { getImgByType } from '../utils/typeImages';
 
 const TypeButtons = ({clickedButtons, setClickedButtons}) => {
     const buttons = [];
@@ -29,10 +30,17 @@ const TypeButtons = ({clickedButtons, setClickedButtons}) => {
                         setClickedButtons([clickedButtons[1], key]);
                     }
                 }} 
-                className={`type-button text-light ${clickedButtons.includes(key) ? "black" : ""}`}
+                className={`type-button d-flex align-items-center justify-content-between text-light ${clickedButtons.includes(key) ? "black" : ""}`}
 
             >
-                <strong>{key}</strong>
+                {key}
+                <img 
+                    src={getImgByType(key)} 
+                    height="20px" 
+                    width="20px"
+                    style={{borderRadius: "50%", boxShadow: `0px 0px 5px black`}} 
+                    alt="type-button" 
+                />
             </button>
         )
     }

@@ -62,12 +62,11 @@ const CustomPokemonInfo = () => {
                                 width: "200px", 
                                 background: `${typeColors[type]}`, 
                                 color: "white", 
-                                fontFamily: "cursive", 
                                 boxShadow: `0 5px 10px 0 ${typeColors[type]}`
                             }} 
                             key={index}
                         >
-                            <span><strong>{type}</strong></span>
+                            <span>{type}</span>
                         </div>
                     ))}
                 </div>
@@ -83,11 +82,10 @@ const CustomPokemonInfo = () => {
                             width: "200px", 
                             background: `${typeColors[pokemonInfo.types[0]]}`, 
                             color: "white", 
-                            fontFamily: "cursive", 
                             boxShadow: `0 5px 10px 0 ${typeColors[pokemonInfo.types[0]]}`
                         }}
                     >
-                        <span><strong>{pokemonInfo.ability}</strong></span>
+                        <span>{pokemonInfo.ability}</span>
                     </div> 
                 </ul>
             </div> 
@@ -101,12 +99,11 @@ const CustomPokemonInfo = () => {
                         style={{
                             width: "200px", 
                             background: `${typeColors[pokemonInfo.types[0]]}`, 
-                            color: "white", 
-                            fontFamily: "cursive", 
+                            color: "white",  
                             boxShadow: `0 5px 10px 0 ${typeColors[pokemonInfo.types[0]]}`
                         }}
                     >
-                        <span><strong>{pokemonInfo.hidden_ability}</strong></span>
+                        <span>{pokemonInfo.hidden_ability}</span>
                     </div> 
                 </ul>
             </div> 
@@ -119,7 +116,7 @@ const CustomPokemonInfo = () => {
                         onClick={() => history.push("/custom-pokemons")} 
                         className="btn text-light"
                 >
-                    <strong>Back</strong>
+                    Back
                 </button>
             </div>
             <div style={{flex: 1}}></div>

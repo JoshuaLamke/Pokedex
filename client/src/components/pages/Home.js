@@ -1,21 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import PokemonTable from '../table/PokemonTable';
-import { COLUMNS } from '../utils/columns';
 import { useHistory, useLocation } from 'react-router-dom';
 import NavBar from '../sub-components/NavBar';
-import Switch from 'react-switch';
 import CardContainer from '../sub-components/CardContainer';
-import CardFilter from '../sub-components/CardFilter';
+import { MenuItem, Select, FormControl } from '@mui/material'
 import Footer from '../sub-components/Footer';
+import PokedexLogo from '../../assets/PokedexLogo.png';
+import { TextField } from "@material-ui/core"
+import { typeColors } from '../utils/typeColors';
+import '../../styles/Home.css';
+import { regions } from '../utils/regions';
 
 const Home = () => {
 
     const history = useHistory();
     const [pokemonRows, setPokemonRows] = useState([]);
     const location = useLocation();
-    const [tabular, setTabular] = useState(false);
     const [filter, setFilter] = useState();
-    const [pageSize, setPageSize] = useState();
+    const [typeFilter, setTypeFilter] = useState("");
+    const [regionFilter, setRegionFilter] = useState("");
+    const [sortFilter, setSortFilter] = useState("Number (Asc)");
+    const [pageSize, setPageSize] = useState(4);
 
     const fetchGeneralPokemonData = () => {
         return fetch('/pokemon/all').then((response) => {
@@ -37,11 +41,6 @@ const Home = () => {
             mounted = false;
         }
     }, [])
-
-    // Navigates to view page once a specific row in the table was clicked
-    const handleRowSelection = (row) => {
-        history.push('/view', {name: row.original.Name, id: row.original.Number, type: pokemonRows[ row.original.Number - 1].types[0]});
-    }
 
     // Handles navigation for the next pokemon button
     const handleNext = () => {
@@ -72,6 +71,18 @@ const Home = () => {
             }
         }
     }
+    const handlePageChange = (e) => {
+        setPageSize(e.target.value);
+    }
+    const handleTypeChange = (e) => {
+        setTypeFilter(e.target.value);
+    }
+    const handleRegionChange = (e) => {
+        setRegionFilter(e.target.value);
+    }
+    const handleSortChange = (e) => {
+        setSortFilter(e.target.value);
+    }
 
     return (
         <div 
@@ -86,63 +97,108 @@ const Home = () => {
                     {title: "Home", onClick: () => {history.push("/")}},
                     {title: "Previous Pokemon", onClick: () => {handlePrevious()}},
                     {title: "Next Pokemon", onClick: () => {handleNext()}},
-                    {title: "Create Pokemon", onClick: () => {history.push("/create")}}
+                    {title: "Create Pokemon", onClick: () => {history.push("/create")}},
+                    {title: "View Custom Pokemon", onClick: () => {history.push("/custom-pokemons")}}
                 ]}
-                color={`${tabular ? "#2a75bb" : "rgb(237,41,57)"}`}
+                color={`${"rgb(237,41,57)"}`}
+                onChange={setFilter} 
+                placeholder={"Search for pokemon"}
             />
             <div className="d-flex flex-column align-items-center w-100">
                 <div className="container-fluid">
                     <div className="col d-flex justify-content-center align-items-center w-100">
-                        <h1 style={{color: `${tabular ? "#2a75bb" : "rgb(237,41,57)"}`}}><strong>Pokedex</strong></h1>
-                    </div>
-                    <div className="d-flex flex-column align-items-center pb-2">
-                        <h2 style={{padding: 0, margin: 0, color: `${tabular ? "#2a75bb" : "rgb(237,41,57)"}`}}><strong>{`${tabular ? "(Tabular)" : "(Card)"}`}</strong></h2>
-                        <Switch  
-                            className="mt-2"
-                            onChange={() => {
-                                setTabular(!tabular);
-                                setFilter("");
-                                setPageSize(4);
-                            }} 
-                            checked={tabular} 
-                            onColor={"#0275d8"} 
-                            offColor={"#d9534f"}
-                            uncheckedIcon={false}
-                            checkedIcon={false}
-                        />
+                        <img src={PokedexLogo} height="60px" width="166px" alt="pokedex logo" className="my-2" />
                     </div>
                 </div>
-                {tabular ?
-                    <div className="container">
-                        <PokemonTable 
+                <div className="container d-flex flex-column align-items-center">
+                    <div className="filter-grid">
+                        <div className="d-flex flex-column align-items-center">
+                            <h3 style={{color: "rgb(237,41,57)"}}>Change Cards Per Page</h3>
+                            <TextField 
+                                value={pageSize} 
+                                onChange={handlePageChange} 
+                                label="Cards Per Page" 
+                                style={{height: "40px"}} 
+                                type={"number"} 
+                                variant="filled"
+                                className="mt-2 mb-3"
+                            />
+                        </div>
+                        <div className="d-flex flex-column align-items-center">
+                            <h3 style={{color: "rgb(237,41,57)"}}>Filter Type</h3>
+                            <FormControl>
+                                <Select
+                                    onChange={handleTypeChange}
+                                    value={typeFilter}
+                                    variant="filled"
+                                    className="mt-2 mb-3"
+                                    style={{width: "220px"}}
+                                >
+                                    <MenuItem key={"All Types"} value={"All Types"}>All Types</MenuItem>
+                                    {Object.keys(typeColors)
+                                    .sort()
+                                    .map((key) => <MenuItem key={key} value={key}>{key}</MenuItem>)}
+                                </Select>
+                            </FormControl>
+                        </div>
+                        <div className="d-flex flex-column align-items-center">
+                            <h3 style={{color: "rgb(237,41,57)"}}>Filter Regions</h3>
+                            <FormControl>
+                                <Select
+                                    onChange={handleRegionChange}
+                                    value={regionFilter}
+                                    variant="filled"
+                                    className="mt-2 mb-3"
+                                    style={{width: "220px"}}
+                                >
+                                    {Object.keys(regions).map((key) => {
+                                        return <MenuItem key={key} value={key}>{key}</MenuItem>
+                                    })}
+                                </Select>
+                            </FormControl>
+                        </div>
+                        <div className="d-flex flex-column align-items-center">
+                            <h3 style={{color: "rgb(237,41,57)"}}>Sort Pokemon</h3>
+                            <FormControl>
+                                <Select
+                                    onChange={handleSortChange}
+                                    value={sortFilter}
+                                    variant="filled"
+                                    className="mt-2 mb-3"
+                                    style={{width: "220px"}}
+                                >
+                                    <MenuItem key={"Number (Asc)"} value={"Number (Asc)"}>
+                                        Number (Asc)
+                                    </MenuItem>
+                                    <MenuItem key={"Number (Desc)"} value={"Number (Desc)"}>
+                                        Number (Desc)
+                                    </MenuItem>
+                                    <MenuItem key={"Name (Asc)"} value={"Name (Asc)"}>
+                                        Name (Asc)
+                                    </MenuItem>
+                                    <MenuItem key={"Name (Desc)"} value={"Name (Desc)"}>
+                                        Name (Desc)
+                                    </MenuItem>
+                                </Select>
+                            </FormControl>
+                        </div>
+                    </div>
+                    {pokemonRows.length ? 
+                        <CardContainer 
                             pokemonRows={pokemonRows} 
-                            pokemonColumns={COLUMNS} 
-                            pageSize={10} 
-                            searchText={"Search For Pokemon:"} 
-                            handleRowSelection={handleRowSelection}
+                            regionFilter={regionFilter}
+                            typeFilter={typeFilter} 
+                            pageSize={pageSize ? pageSize : 4} 
+                            filter={filter ? filter : ""}
+                            sortBy={sortFilter}
                         />
-                    </div>
-                :
-                    <div className="container d-flex flex-column align-items-center">
-                        <CardFilter onChange={setPageSize} placeholder={"Set cards per page"} type={"number"}/>
-                        <CardFilter onChange={setFilter} placeholder={"Search for pokemon"} type={"text"}/>
-                        <button 
-                            onClick={() => {history.push("/custom-pokemons")}} 
-                            style={{fontSize: 14, fontFamily: "cursive", marginRight: "2px", color: "white"}} 
-                            className="btn btn-danger"
-                        >
-                            View Custom Pokemon
-                        </button>
-                        {pokemonRows.length ? 
-                            <CardContainer pokemonRows={pokemonRows} pageSize={pageSize ? pageSize : 4} filter={filter ? filter : ""}/>
-                        :
-                            ""
-                        }
-                    </div>
-                }
+                    :
+                        ""
+                    }
+                </div>
             </div>
             <div style={{flex: 1}}></div>
-            <Footer color={`${tabular ? "#2a75bb" : "rgb(237,41,57)"}`}/>
+            <Footer color={`${"rgb(237,41,57)"}`}/>
         </div>
     )
 }

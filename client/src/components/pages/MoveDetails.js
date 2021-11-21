@@ -61,12 +61,11 @@ const MoveDetails = () => {
                             style={{
                                 width: "200px", 
                                 background: `${typeColors[moveInfo.type]}`, 
-                                color: "white", 
-                                fontFamily: "cursive", 
+                                color: "white",
                                 boxShadow: `0 5px 10px 0 ${typeColors[moveInfo.type]}`
                             }}
                         >
-                            <span><strong>{moveInfo.type}</strong></span>
+                            <span>{moveInfo.type}</span>
                         </div>
                     </div>
                 </div> 

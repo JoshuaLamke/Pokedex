@@ -19,12 +19,11 @@ const Abilities = ({pokemonInfo}) => {
                                     style={{
                                         width: "200px", 
                                         background: `${typeColors[pokemonInfo.types[0]]}`, 
-                                        color: "white", 
-                                        fontFamily: "cursive", 
+                                        color: "white",
                                         boxShadow: `0 5px 10px 0 ${typeColors[pokemonInfo.types[0]]}`
                                     }} 
                                     key={index}
-                                ><span><strong>{ability.name}</strong></span>
+                                ><span>{ability.name}</span>
                                 </div> 
                                 : 
                                 ""
@@ -40,11 +39,10 @@ const Abilities = ({pokemonInfo}) => {
                             width: "200px", 
                             background: `${typeColors[pokemonInfo.types[0]]}`, 
                             color: "white", 
-                            fontFamily: "cursive", 
                             boxShadow: `0 5px 10px 0 ${typeColors[pokemonInfo.types[0]]}`
                         }}
                     >
-                        <span><strong>{"None"}</strong></span>
+                        <span>{"None"}</span>
                     </div>
                     }
                 </ul>
@@ -65,12 +63,11 @@ const Abilities = ({pokemonInfo}) => {
                                 width: "200px", 
                                 background: `${typeColors[pokemonInfo.types[0]]}`, 
                                 color: "white", 
-                                fontFamily: "cursive", 
                                 boxShadow: `0 5px 10px 0 ${typeColors[pokemonInfo.types[0]]}`
                             }} 
                             key={index}
                         >
-                            <span><strong>{ability.name}</strong></span>
+                            <span>{ability.name}</span>
                         </div> 
                         : 
                         ""
@@ -84,12 +81,11 @@ const Abilities = ({pokemonInfo}) => {
                         style={{
                             width: "200px", 
                             background: `${typeColors[pokemonInfo.types[0]]}`, 
-                            color: "white", 
-                            fontFamily: "cursive", 
+                            color: "white",
                             boxShadow: `0 5px 10px 0 ${typeColors[pokemonInfo.types[0]]}`
                         }}
                     >
-                        <span><strong>{"None"}</strong></span>
+                        <span>{"None"}</span>
                     </div>
                     }
                 </ul>

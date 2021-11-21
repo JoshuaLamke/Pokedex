@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import  Card from "./Card";
 import "../../styles/card-container.css";
 
 const MoveCardContainer = ({moveRows, pageSize, picture, filter}) => {
     const [page, setPage] = useState(0);
     const filteredMoves = moveRows.filter(({name}) => {return filter ? name.toLowerCase().includes(filter.toLowerCase().trim()) : true});
+
+    useEffect(() => {
+        setPage(0);
+    },[filter, pageSize])
 
     return (
         <>
@@ -24,7 +28,7 @@ const MoveCardContainer = ({moveRows, pageSize, picture, filter}) => {
                 <button 
                     disabled={page <= 0} 
                     onClick={() => {setPage(0)}} 
-                    style={{width: "50px", fontSize: 14, fontFamily: "cursive", marginRight: "2px", color: "white"}} 
+                    style={{width: "50px", fontSize: 14, marginRight: "2px", color: "white"}} 
                     className="btn btn-danger"
                 >
                     {"<<"}
@@ -32,7 +36,7 @@ const MoveCardContainer = ({moveRows, pageSize, picture, filter}) => {
                 <button 
                     disabled={page <= 0} 
                     onClick={() => {setPage(page - 1)}} 
-                    style={{width: "80px", fontSize: 14, fontFamily: "cursive", marginRight: "2px", color: "white"}} 
+                    style={{width: "80px", fontSize: 14, marginRight: "2px", color: "white"}} 
                     className="btn btn-danger"
                 >
                     Previous
@@ -40,7 +44,7 @@ const MoveCardContainer = ({moveRows, pageSize, picture, filter}) => {
                 <button 
                     disabled={page >= Math.ceil(filteredMoves.length/pageSize) - 1} 
                     onClick={() => {setPage(page + 1)}} 
-                    style={{width: "80px", fontSize: 14, fontFamily: "cursive", marginRight: "2px", color: "white"}} 
+                    style={{width: "80px", fontSize: 14, marginRight: "2px", color: "white"}} 
                     className="btn btn-danger"
                 >
                     Next
@@ -48,7 +52,7 @@ const MoveCardContainer = ({moveRows, pageSize, picture, filter}) => {
                 <button 
                     disabled={page >= Math.ceil(filteredMoves.length/pageSize) - 1} 
                     onClick={() => {setPage(Math.ceil(filteredMoves.length/pageSize) - 1)}} 
-                    style={{width: "50px", fontSize: 14, fontFamily: "cursive", color: "white"}} 
+                    style={{width: "50px", fontSize: 14, color: "white"}} 
                     className="btn btn-danger"
                 >
                     {">>"}

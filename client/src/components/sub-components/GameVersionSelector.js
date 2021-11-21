@@ -5,7 +5,7 @@ const GameVersionSelector = ({setVersion, version}) => {
     return (
         <>
             <div className="container-fluid justify-content-center align-items-center d-flex mb-3">
-                    <p className="me-1 mb-0"><strong>Game Version:</strong></p>
+                    <p className="me-1 mb-0">Game Version:</p>
                     <Form.Group>
                         <select
                             

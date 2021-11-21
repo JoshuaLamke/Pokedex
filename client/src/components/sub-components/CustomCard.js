@@ -1,8 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { typeColors } from "../utils/typeColors";
-import '../../styles/card.css';
 import { getImgByType } from '../utils/typeImages';
+import { darken } from '../utils/utility';
 
 const CustomCard = ({name, imageSrc, types, pokemonInfo }) => {
     const history = useHistory();
@@ -20,13 +20,15 @@ const CustomCard = ({name, imageSrc, types, pokemonInfo }) => {
                 className="clickable d-flex flex-column align-items-center bg-light rounded pt-2" 
                 onClick={() => {routeToPokemonInfo()}} 
                 style={{
-                    background: `${types.length > 1 ? `linear-gradient(${typeColors[types[0]]},${typeColors[types[1]]})` : typeColors[types[0]]}`,
+                    background: `${types.length > 1 ? 
+                        `linear-gradient(${typeColors[types[0]]},${typeColors[types[1]]})` : 
+                        `linear-gradient(${typeColors[types[0]]}, ${darken(typeColors[types[0]])})`}`,
                     boxShadow: `0px 10px 50px 0 rgba${typeColors[types[0]].substring(3, typeColors[types[0]].length - 1)},.3)`, 
                     height: "375px"
                 }}
             >
                 <h3 
-                    style={{color: `white`, fontFamily: "cursive", margin: "none", padding: "none"}} 
+                    style={{color: `white`, margin: "none", padding: "none"}} 
                     className="card-name"
                 >
                     {name}
@@ -37,7 +39,7 @@ const CustomCard = ({name, imageSrc, types, pokemonInfo }) => {
                         {types.map((type, index) => {
                             return <img 
                                         src={getImgByType(type)} 
-                                        style={{boxShadow: `0px 0px 50px black)`}} 
+                                        style={{boxShadow: `0px 0px 10px white`, borderRadius: "50%"}}  
                                         alt="pokemon-type" 
                                         height="40px" 
                                         width="40px" 

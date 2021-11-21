@@ -1,8 +1,8 @@
 import React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { typeColors } from "../utils/typeColors";
-import '../../styles/card.css';
 import { getImgByType } from '../utils/typeImages';
+import { darken } from '../utils/utility';
 
 const Card = ({name, imageSrc, types, number, moveInfo }) => {
     const history = useHistory();
@@ -15,7 +15,6 @@ const Card = ({name, imageSrc, types, number, moveInfo }) => {
         pokemonName = location.state.name;
         id = location.state.id;
     }
-
     // Route to either the pokemon info page or specific move detail page
     // If there is move information then route to move details, otherwise go to pokemon info page
     const routeToPokemonInfo = () => {
@@ -33,23 +32,25 @@ const Card = ({name, imageSrc, types, number, moveInfo }) => {
                 className="clickable d-flex flex-column align-items-center rounded pt-2" 
                 onClick={() => {routeToPokemonInfo()}} 
                 style={{
-                    background: `${types.length > 1 ? `linear-gradient(${typeColors[types[0]]},${typeColors[types[1]]})` : typeColors[types[0]]}`,
+                    background: `${types.length > 1 ? 
+                        `linear-gradient(${typeColors[types[0]]},${typeColors[types[1]]})` : 
+                        `linear-gradient(${typeColors[types[0]]}, ${darken(typeColors[types[0]])})`}`,
                     boxShadow: `0px 10px 50px 0 rgba${typeColors[types[0]].substring(3, typeColors[types[0]].length - 1)},.3)`, 
                     height: "375px"
                 }}
             >
                 <h3 
-                    style={{fontFamily: "cursive", color: "white"}} 
+                    style={{color: "white"}} 
                 >
                     {name}
                 </h3>
-                {number ? <h3 style={{fontFamily: "cursive", color: "white"}}>{`#${number}`}</h3> : ""}
+                {number ? <h3 style={{color: "white"}}>{`#${number}`}</h3> : ""}
                 <img src={imageSrc} alt={""} style={{width: "200px", height: "auto"}}/>
-                <div className="d-flex justify-content-center">
+                <div className="d-flex justify-content-center align-items-center" style={{height: "100%"}}>
                     {types.map((type, index) => {
                         return <img 
                                     src={getImgByType(type)} 
-                                    style={{boxShadow: `0px 0px 50px black)`}} 
+                                    style={{boxShadow: `0px 0px 10px white`, borderRadius: "50%"}} 
                                     alt="pokemon-type" 
                                     height="40px" 
                                     width="40px" 

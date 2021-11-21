@@ -1,19 +1,18 @@
 import React from 'react';
+import SearchBar from 'material-ui-search-bar';
 
-const GlobalFilter = ({filter, setFilter, searchText}) => {
+const GlobalFilter = ({placeholder, onChange, }) => {
     return (
-        <div className="input-group d-flex align-items-center">
-            <span style={{paddingRight: "20px"}}>
-                <b>{searchText}</b>
-            </span>
-            <input 
-            className="form-control border-end-0 border rounded-pill border-dark" 
-            type="text" 
-            id="example-search-input" 
-            value={filter || ""} 
-            onChange={(e) => setFilter(e.target.value)}
-            />
-        </div>
+        <SearchBar 
+            className="my-2"
+            placeholder={placeholder}
+            onChange={(val) => onChange(val)}
+            onCancelSearch={() => onChange("")}
+            style={{
+                height: "30px", 
+                marginLeft: "5px"
+            }}
+        />
     )
 }
 
