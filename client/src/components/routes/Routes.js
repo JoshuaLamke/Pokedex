@@ -12,10 +12,12 @@ import PokemonMoves from "../pages/PokemonMoves";
 import CreatePokemon from "../pages/CreatePokemon";
 import CustomPokemon from "../pages/CustomPokemon";
 import CustomPokemonInfo from "../pages/CustomPokemonInfo";
+import ScrollToTop from "./ScrollToTop";
 
 const Routes = () => {
     return (
         <Router>
+            <ScrollToTop />
             <Switch>
                 <Route exact path="/">
                     <Home />

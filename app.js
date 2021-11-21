@@ -220,6 +220,90 @@ app.get("/custom-pokemon", async (req, res) => {
     }
 })
 
+const getEvoChain = async (responseJSON) => {
+    let evoChain = responseJSON.chain;
+    let names = []
+    do {
+        const evoDetails = evoChain['species']['name'];
+
+        names.push(evoDetails);
+
+        evoChain = evoChain['evolves_to'][0];
+    } while (!!evoChain && evoChain.hasOwnProperty('evolves_to'));
+    let responses = await Promise.all(names.map((name) => fetch(`https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`)));
+    const responsesJSON = await Promise.all(responses.map((response) => response.json()));
+    const ids = responsesJSON.map((response) => response.id);
+    const url = "https://assets.pokemon.com/assets/cms2/img/pokedex/full/";
+    const images = ids.map((id, index) => {
+        if(id < 10) {
+            return {
+                image: url + `00${id}.png`,
+                name: names[index],
+                id: id
+            }
+        } 
+        if(id < 100) {
+            return {
+                image: url + `0${id}.png`,
+                name: names[index],
+                id: id
+            }
+        }
+        return {
+            image: url + `${id}.png`,
+            name: names[index],
+            id: id
+        }
+    })
+    return images;
+}
+
+app.get("/evolution-info/:name", async (req, res) => {
+    const name = req.params.name;
+    try{
+        //Check firebase first for data
+        const evolutionChain = await db.collection("evolution-chains").doc(name).get();
+        if(evolutionChain.exists) {
+            res.status(200).json(evolutionChain.data());
+            return;
+        } 
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${name}`);
+        if(response.status === 200) {
+            const responseJSON = await response.json();
+            const evoChainResponse = await fetch(responseJSON.evolution_chain.url);
+            const evoChainResponseJSON = await evoChainResponse.json();
+            const evoChain = await getEvoChain(evoChainResponseJSON);
+            const evoChainObj = {
+                happiness: responseJSON.base_happiness,
+                captureRate: responseJSON.capture_rate,
+                color: responseJSON.color ? responseJSON.color.name : "",
+                habitat: responseJSON.habitat ? responseJSON.habitat.name : "",
+                isBaby: responseJSON.is_baby,
+                isLegendary: responseJSON.is_legendary,
+                isMythical: responseJSON.is_mythical,
+                shape: responseJSON.shape ? responseJSON.shape.name : "",
+                eggGroups: responseJSON.egg_groups ? responseJSON.egg_groups.map((group) => group.name) : [],
+                descriptions: responseJSON.flavor_text_entries ? responseJSON.flavor_text_entries.map((entry) => {
+                    return {
+                        language: entry.language.name,
+                        description: entry.flavor_text,
+                        version: entry.version.name
+                    }
+                }).filter((entry) => entry.language == "en") : [],
+                evolutionChain: evoChain
+            }
+            //Set evo chain info in firebase since it wasnt there
+            await db.collection("evolution-chains").doc(name).set(evoChainObj);
+            res.status(200).json(evoChainObj);
+        } else if(response.status === 404) {
+            res.status(404).json({"Error": `Cannot find evolution chain for ${name}`})
+        } 
+    } catch(e) {
+        console.log(e);
+        res.status(500).json({"Error": `Something went wrong with the request`})
+    }
+})
+
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
 app.get('*', (req, res) => {

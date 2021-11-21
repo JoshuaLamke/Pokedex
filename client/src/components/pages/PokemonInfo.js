@@ -10,6 +10,7 @@ import LevelUpMoves from '../sub-components/LevelUpMoves';
 import GameVersionSelector from '../sub-components/GameVersionSelector';
 import Abilities from '../sub-components/Abilities';
 import VERSIONS from '../utils/versions';
+import { getImgByType } from '../utils/typeImages';
 
 const PokemonInfo = () => {
     const [pokemonInfo, setPokemonInfo] = useState({});
@@ -18,15 +19,16 @@ const PokemonInfo = () => {
     const location = useLocation();
     const [isLoaded, setIsLoaded] = useState(location.state.isLoaded);
     const [version, setVersion] = useState('red-blue');
+    const [evolutionInfo, setEvolutionInfo] = useState({});
 
     const type = location.state.type;
     let name = useLocation().state.name;
     name = capitalize(name);
     const id = useLocation().state.id;
 
-    const findFirstGameVersion = (pokemonMoves) => {
+    const findFirstGameVersion = (evolutionInfo) => {
         for(let i = 0; i < VERSIONS.length; i++) {
-            const arr = pokemonMoves.filter((move) => move.version_group_details.filter((move) => move["level_learned_at"] > 0 && move["version_group"].name === VERSIONS[i]).length);
+            const arr = evolutionInfo.descriptions.filter((info) => VERSIONS[i].includes(info.version));
             if(arr.length) {
                 setVersion(VERSIONS[i]);
                 break;
@@ -54,9 +56,9 @@ const PokemonInfo = () => {
         }).then((responseJSON) => {
             //Formatting data to be displayed better
             responseJSON.weight /= 10;
-            responseJSON.weight += " kilograms";
+            responseJSON.weight += " kg";
             responseJSON.height /= 10;
-            responseJSON.height += " meters";
+            responseJSON.height += " m";
             let capitalizedTypes = responseJSON.types.map(type => capitalize(type));
             let capitalizedAbilities =  responseJSON.abilities.map((ability) => {
                 let capName = capitalize(ability.name);
@@ -69,18 +71,22 @@ const PokemonInfo = () => {
             }
             return responseJSON;
         }).then((info) => {
-            // Delay .25 seconds to show cute loading gifs. 
-            // Otherwise they flash across screen and look bad.
+            if(mounted) {
+                setPokemonInfo({...info, moves: info.moves.map((move) => move.move.name)});
+                setPokemonMoves(info.moves);
+            }
+        });
+        fetch(`/evolution-info/${id}`).then((response) => {
+            return response.json()
+        }).then((responseJSON) => {
             setTimeout(() => {
-                // Makes sure component is mounted before setting state
                 if(mounted) {
-                    setPokemonInfo({...info, moves: info.moves.map((move) => move.move.name)});
-                    setPokemonMoves(info.moves);
-                    findFirstGameVersion(info.moves);
+                    findFirstGameVersion(responseJSON);
+                    setEvolutionInfo(responseJSON);
                     setIsLoaded(true);
                 }
             }, 250)
-        });
+        })
         return () => {
             mounted = false;
         }
@@ -146,7 +152,38 @@ const PokemonInfo = () => {
                         <h1 className="pb-2" style={{color: `${typeColors[pokemonInfo.types[0]]}`}}>{name + ` #${id}`}</h1>
                         <img id="pokemon-img" src={`${pokemonInfo.sprites}`} alt={`${name} pic`}/>
                         <div className="container d-flex justify-content-center text-center">
-                            <h5>{pokemonInfo.description}</h5>
+                            <h5>
+                                {
+                                    evolutionInfo.descriptions.filter((info) => version.includes(info.version)).length > 0 && 
+                                    evolutionInfo.descriptions.filter((info) => version.includes(info.version))[0].description
+                                }
+                            </h5>
+                        </div>
+                        <div className="d-flex justify-content-between" style={{width: "250px"}}>
+                            <div className="d-flex flex-column align-items-center">
+                                <h3 style={{color: `${typeColors[pokemonInfo.types[0]]}`}}>Height</h3>
+                                <p><strong>{pokemonInfo.height}</strong></p>
+                            </div>
+                            <div className="d-flex flex-column align-items-center">
+                                <h3 style={{color: `${typeColors[pokemonInfo.types[0]]}`}}>Weight</h3>
+                                <p><strong>{pokemonInfo.weight}</strong></p>
+                            </div>
+                        </div>
+                        <div className="d-flex justify-content-between mb-3" style={{width: "250px"}}>
+                            {!!evolutionInfo.eggGroups.length &&
+                                <div className="d-flex flex-column align-items-center">
+                                    <h3 style={{color: `${typeColors[pokemonInfo.types[0]]}`}}>Egg Groups</h3>
+                                    <strong className="text-center">
+                                        {evolutionInfo.eggGroups.map((group) => <p style={{marginBottom: 0}}>{capitalize(group)}</p>)}
+                                    </strong>
+                                </div>
+                            }
+                            {!!evolutionInfo.shape &&
+                                <div className="d-flex flex-column align-items-center">
+                                    <h3 style={{color: `${typeColors[pokemonInfo.types[0]]}`}}>Shape</h3>
+                                    <p><strong>{capitalize(evolutionInfo.shape)}</strong></p>
+                                </div>
+                            }
                         </div>
                     </div>
                     <div className="container-fluid d-flex justify-content-center">
@@ -162,27 +199,44 @@ const PokemonInfo = () => {
                         <h2 style={{color: `${typeColors[pokemonInfo.types[0]]}`}}>Types</h2>
                     </div>
                     <div className="container-fluid d-flex justify-content-center mb-3">
-                        <div className="container -fluid d-flex flex-column align-items-center">
-                            {!!pokemonInfo.types 
-                            && 
-                            pokemonInfo.types.map((type, index) => (
-                                <div 
-                                    className="text-center shadow border mb-2 rounded" 
-                                    style={{
-                                        width: "200px", 
-                                        background: `${typeColors[type]}`, 
-                                        color: "white", 
-                                        fontFamily: "cursive", 
-                                        boxShadow: `0 5px 10px 0 ${typeColors[type]}`
-                                    }} 
-                                    key={index}
-                                >
-                                    <span><strong>{type}</strong></span>
+                        <div className="container -fluid d-flex justify-content-center" style={{width: "250px"}}>
+                            {pokemonInfo.types.map((type, index) => (
+                                <div key={index} className="d-flex flex-column align-items-center my-3 mx-3">
+                                    <p style={{color: `${typeColors[pokemonInfo.types[0]]}`}}><strong>{type}</strong></p>
+                                    <img height="40px" width="40px" src={getImgByType(type)}/>
                                 </div>
                             ))}
                         </div>
                     </div> 
                     <Abilities pokemonInfo={pokemonInfo} />
+                    {!!evolutionInfo && 
+                    <div id="evo-chain-container" style={{color: `${typeColors[pokemonInfo.types[0]]}`}}>
+                        <h2>Evolution Chain</h2>
+                        <div id="evolution-container">
+                            {evolutionInfo.evolutionChain.map((pokemon) => {
+                            return (
+                                <div className="d-flex flex-column align-items-center">
+                                    <h2>{capitalize(pokemon.name)}</h2>
+                                    <button
+                                        style={{cursor: "default",border: "none", background: "inherit"}} 
+                                        onClick={() => history.push("/view", {id: pokemon.id, name: pokemon.name, type: type})}
+                                    >
+                                        <img 
+                                            height="200px" 
+                                            width="200px" 
+                                            className="mx-5 btn" 
+                                            id="evo-img"
+                                            src={pokemon.image} 
+                                            alt={pokemon.name} 
+                                            style={{cursor: "pointer"}}
+                                        />
+                                    </button>
+                                </div>
+                            )
+                            })}
+                        </div>
+                    </div>
+                    }
                     {!!pokemonMoves.filter((move) => move.version_group_details.filter((move) => move["level_learned_at"] > 0 && move["version_group"].name === version).length > 0).length ?
                      <>
                         <LevelUpMoves gameVersion={version} moves={pokemonMoves} pokemonInfo={pokemonInfo}/>
