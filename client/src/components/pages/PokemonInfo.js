@@ -52,6 +52,8 @@ const PokemonInfo = () => {
     
     useEffect(() => {
         let mounted = true;
+        setIsLoaded(false);
+        setIsLoadedEvo(false);
         fetch(`/pokemon/${id}`).then((response) => {
             return response.json();
         }).then((responseJSON) => {
@@ -92,7 +94,7 @@ const PokemonInfo = () => {
         return () => {
             mounted = false;
         }
-    }, [id])
+    }, [id,history])
 
     // Handles navigation for the next pokemon button
     const handleNext = () => {
@@ -156,12 +158,13 @@ const PokemonInfo = () => {
                         <div className="container d-flex justify-content-center text-center">
                             <h5>
                                 {
-                                    evolutionInfo.descriptions.filter((info) => version.includes(info.version)).length > 0 && 
-                                    evolutionInfo.descriptions.filter((info) => version.includes(info.version))[0].description
+                                    evolutionInfo.descriptions.filter((info) => version.includes(info.version)).length > 0 ?
+                                    evolutionInfo.descriptions.filter((info) => version.includes(info.version))[0].description :
+                                    "No description for the selected game version!"
                                 }
                             </h5>
                         </div>
-                        <div className="d-flex justify-content-between" style={{width: "250px"}}>
+                        <div className="grid w-75">
                             <div className="d-flex flex-column align-items-center">
                                 <h3 style={{color: `${typeColors[pokemonInfo.types[0]]}`}}>Height</h3>
                                 <p><strong>{pokemonInfo.height}</strong></p>
@@ -170,8 +173,6 @@ const PokemonInfo = () => {
                                 <h3 style={{color: `${typeColors[pokemonInfo.types[0]]}`}}>Weight</h3>
                                 <p><strong>{pokemonInfo.weight}</strong></p>
                             </div>
-                        </div>
-                        <div className="d-flex justify-content-between mb-3" style={{width: "250px"}}>
                             {!!evolutionInfo.eggGroups.length &&
                                 <div className="d-flex flex-column align-items-center">
                                     <h3 style={{color: `${typeColors[pokemonInfo.types[0]]}`}}>Egg Groups</h3>
@@ -184,6 +185,54 @@ const PokemonInfo = () => {
                                 <div className="d-flex flex-column align-items-center">
                                     <h3 style={{color: `${typeColors[pokemonInfo.types[0]]}`}}>Shape</h3>
                                     <p><strong>{capitalize(evolutionInfo.shape)}</strong></p>
+                                </div>
+                            }
+                            {!!evolutionInfo.captureRate &&
+                                <div className="d-flex flex-column align-items-center">
+                                    <h3 style={{color: `${typeColors[pokemonInfo.types[0]]}`}}>Capture Rate</h3>
+                                    <p><strong>{evolutionInfo.captureRate}</strong></p>
+                                </div>
+                            }
+                            {!!evolutionInfo.happiness &&
+                                <div className="d-flex flex-column align-items-center">
+                                    <h3 style={{color: `${typeColors[pokemonInfo.types[0]]}`}}>Happiness</h3>
+                                    <p><strong>{evolutionInfo.happiness}</strong></p>
+                                </div>
+                            }
+                            {!!evolutionInfo.color &&
+                                <div className="d-flex flex-column align-items-center">
+                                    <h3 style={{color: `${typeColors[pokemonInfo.types[0]]}`}}>Color</h3>
+                                    <p><strong>{capitalize(evolutionInfo.color)}</strong></p>
+                                </div>
+                            }
+                            {!!evolutionInfo.habitat &&
+                                <div className="d-flex flex-column align-items-center">
+                                    <h3 style={{color: `${typeColors[pokemonInfo.types[0]]}`}}>Habitat</h3>
+                                    <p><strong>{capitalize(evolutionInfo.habitat)}</strong></p>
+                                </div>
+                            }
+                            {!!evolutionInfo.happiness &&
+                                <div className="d-flex flex-column align-items-center">
+                                    <h3 style={{color: `${typeColors[pokemonInfo.types[0]]}`}}>Happiness</h3>
+                                    <p><strong>{evolutionInfo.happiness}</strong></p>
+                                </div>
+                            }
+                            {!!evolutionInfo.isBaby &&
+                                <div className="d-flex flex-column align-items-center">
+                                    <h3 style={{color: `${typeColors[pokemonInfo.types[0]]}`}}>Is Baby</h3>
+                                    <p><strong>{evolutionInfo.isBaby ? "Yes" : "No"}</strong></p>
+                                </div>
+                            }
+                            {!!evolutionInfo.isLegendary &&
+                                <div className="d-flex flex-column align-items-center">
+                                    <h3 style={{color: `${typeColors[pokemonInfo.types[0]]}`}}>Is Legendary</h3>
+                                    <p><strong>{evolutionInfo.isLegendary ? "Yes" : "No"}</strong></p>
+                                </div>
+                            }
+                            {!!evolutionInfo.isMythical &&
+                                <div className="d-flex flex-column align-items-center">
+                                    <h3 style={{color: `${typeColors[pokemonInfo.types[0]]}`}}>Is Mythical</h3>
+                                    <p><strong>{evolutionInfo.isMythical ? "Yes" : "No"}</strong></p>
                                 </div>
                             }
                         </div>
@@ -205,25 +254,22 @@ const PokemonInfo = () => {
                             {pokemonInfo.types.map((type, index) => (
                                 <div key={index} className="d-flex flex-column align-items-center my-3 mx-3">
                                     <p style={{color: `${typeColors[pokemonInfo.types[0]]}`}}><strong>{type}</strong></p>
-                                    <img height="40px" width="40px" src={getImgByType(type)}/>
+                                    <img height="40px" width="40px" alt="pokemon type" src={getImgByType(type)}/>
                                 </div>
                             ))}
                         </div>
                     </div> 
                     <Abilities pokemonInfo={pokemonInfo} />
                     {!!evolutionInfo && 
-                    <div id="evo-chain-container" style={{color: `${typeColors[pokemonInfo.types[0]]}`}}>
+                    <div id="evo-chain-container" style={{color: `${typeColors[pokemonInfo.types[0]]}`, alignSelf: "center"}}>
                         <h2>Evolution Chain</h2>
                         <div id="evolution-container">
                             {evolutionInfo.evolutionChain.map((pokemon) => {
                             return (
                                 <div className="d-flex flex-column align-items-center">
                                     <h2>{capitalize(pokemon.name)}</h2>
-                                    <button
-                                        style={{cursor: "default",border: "none", background: "inherit"}} 
-                                        onClick={() => history.push("/view", {id: pokemon.id, name: pokemon.name, type: type})}
-                                    >
                                         <img 
+                                            onClick={() => history.push("/view", {id: pokemon.id, name: pokemon.name, type: type})}
                                             height="200px" 
                                             width="200px" 
                                             className="mx-5 btn" 
@@ -232,7 +278,6 @@ const PokemonInfo = () => {
                                             alt={pokemon.name} 
                                             style={{cursor: "pointer"}}
                                         />
-                                    </button>
                                 </div>
                             )
                             })}
