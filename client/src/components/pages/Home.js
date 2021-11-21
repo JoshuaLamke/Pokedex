@@ -118,7 +118,7 @@ const Home = () => {
                                 value={pageSize} 
                                 onChange={handlePageChange} 
                                 label="Cards Per Page" 
-                                style={{height: "40px"}} 
+                                style={{height: "40px", width: "220px"}} 
                                 type={"number"} 
                                 variant="filled"
                                 className="mt-2 mb-3"
