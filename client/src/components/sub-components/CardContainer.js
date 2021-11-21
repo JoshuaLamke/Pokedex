@@ -10,7 +10,7 @@ const CardContainer = ({pokemonRows, pageSize, filter, typeFilter, regionFilter,
         let passTypeFilter = true;
         let passRegionFilter = true;
 
-        if(filter || typeFilter) {
+        if(filter || typeFilter || regionFilter) {
             if(filter) {
                 passSearchFilter = Name.toLowerCase().includes(filter.toLowerCase().trim());
             }

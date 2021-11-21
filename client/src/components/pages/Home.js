@@ -118,7 +118,7 @@ const Home = () => {
                                 value={pageSize} 
                                 onChange={handlePageChange} 
                                 label="Cards Per Page" 
-                                style={{height: "40px", width: "220px"}} 
+                                style={{height: "56px", width: "220px"}}
                                 type={"number"} 
                                 variant="filled"
                                 className="mt-2 mb-3"
@@ -132,7 +132,7 @@ const Home = () => {
                                     value={typeFilter}
                                     variant="filled"
                                     className="mt-2 mb-3"
-                                    style={{width: "220px"}}
+                                    style={{height: "56px", width: "220px"}}
                                 >
                                     <MenuItem key={"All Types"} value={"All Types"}>All Types</MenuItem>
                                     {Object.keys(typeColors)
@@ -149,7 +149,7 @@ const Home = () => {
                                     value={regionFilter}
                                     variant="filled"
                                     className="mt-2 mb-3"
-                                    style={{width: "220px"}}
+                                    style={{height: "56px", width: "220px"}}
                                 >
                                     {Object.keys(regions).map((key) => {
                                         return <MenuItem key={key} value={key}>{key}</MenuItem>
@@ -165,7 +165,7 @@ const Home = () => {
                                     value={sortFilter}
                                     variant="filled"
                                     className="mt-2 mb-3"
-                                    style={{width: "220px"}}
+                                    style={{height: "56px", width: "220px"}}
                                 >
                                     <MenuItem key={"Number (Asc)"} value={"Number (Asc)"}>
                                         Number (Asc)

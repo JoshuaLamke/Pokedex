@@ -77,7 +77,7 @@ const CustomPokemon = () => {
                                         value={pageSize} 
                                         onChange={handlePageChange} 
                                         label="Cards Per Page" 
-                                        style={{height: "40px"}} 
+                                        style={{height: "56px", width: "220px"}}
                                         type={"number"} 
                                         variant="filled"
                                         className="mt-2 mb-3"
@@ -91,8 +91,8 @@ const CustomPokemon = () => {
                                             value={typeFilter}
                                             variant="filled"
                                             className="mt-2 mb-3"
-                                            style={{width: "220px"}}
-                                        >
+                                            style={{height: "56px", width: "220px"}}
+                                            >
                                             <MenuItem key={"All Types"} value={"All Types"}>All Types</MenuItem>
                                             {Object.keys(typeColors)
                                             .sort()
@@ -108,8 +108,8 @@ const CustomPokemon = () => {
                                             value={sortFilter}
                                             variant="filled"
                                             className="mt-2 mb-3"
-                                            style={{width: "220px"}}
-                                        >
+                                            style={{height: "56px", width: "220px"}}
+                                            >
                                             <MenuItem key={"Name (Asc)"} value={"Name (Asc)"}>
                                                 Name (Asc)
                                             </MenuItem>
