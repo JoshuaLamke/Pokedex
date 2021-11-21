@@ -17,7 +17,8 @@ const PokemonInfo = () => {
     const [pokemonMoves, setPokemonMoves] = useState([]);
     const history = useHistory();
     const location = useLocation();
-    const [isLoaded, setIsLoaded] = useState(location.state.isLoaded);
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [isLoadedEvo, setIsLoadedEvo] = useState(false);
     const [version, setVersion] = useState('red-blue');
     const [evolutionInfo, setEvolutionInfo] = useState({});
 
@@ -74,6 +75,7 @@ const PokemonInfo = () => {
             if(mounted) {
                 setPokemonInfo({...info, moves: info.moves.map((move) => move.move.name)});
                 setPokemonMoves(info.moves);
+                setIsLoaded(true)
             }
         });
         fetch(`/evolution-info/${id}`).then((response) => {
@@ -83,7 +85,7 @@ const PokemonInfo = () => {
                 if(mounted) {
                     findFirstGameVersion(responseJSON);
                     setEvolutionInfo(responseJSON);
-                    setIsLoaded(true);
+                    setIsLoadedEvo(true);
                 }
             }, 250)
         })
@@ -140,7 +142,7 @@ const PokemonInfo = () => {
                 flexDirection: "column"
             }}
         >  
-            {isLoaded ? 
+            {(isLoaded && isLoadedEvo) ? 
                 <>
                     <NavBar routes={[
                         {title: "Home", onClick: () => {history.push("/")}},
