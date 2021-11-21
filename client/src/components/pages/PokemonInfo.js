@@ -164,17 +164,17 @@ const PokemonInfo = () => {
                                 }
                             </h5>
                         </div>
-                        <div className="grid w-75">
-                            <div className="d-flex flex-column align-items-center">
+                        <div className="grid-info w-75">
+                            <div className="d-flex flex-column text-center align-items-center">
                                 <h3 style={{color: `${typeColors[pokemonInfo.types[0]]}`}}>Height</h3>
                                 <p><strong>{pokemonInfo.height}</strong></p>
                             </div>
-                            <div className="d-flex flex-column align-items-center">
+                            <div className="d-flex flex-column text-center align-items-center">
                                 <h3 style={{color: `${typeColors[pokemonInfo.types[0]]}`}}>Weight</h3>
                                 <p><strong>{pokemonInfo.weight}</strong></p>
                             </div>
                             {!!evolutionInfo.eggGroups.length &&
-                                <div className="d-flex flex-column align-items-center">
+                                <div className="d-flex flex-column text-center align-items-center">
                                     <h3 style={{color: `${typeColors[pokemonInfo.types[0]]}`}}>Egg Groups</h3>
                                     <strong className="text-center">
                                         {evolutionInfo.eggGroups.map((group) => <p style={{marginBottom: 0}}>{capitalize(group)}</p>)}
@@ -182,55 +182,55 @@ const PokemonInfo = () => {
                                 </div>
                             }
                             {!!evolutionInfo.shape &&
-                                <div className="d-flex flex-column align-items-center">
+                                <div className="d-flex flex-column text-center align-items-center">
                                     <h3 style={{color: `${typeColors[pokemonInfo.types[0]]}`}}>Shape</h3>
                                     <p><strong>{capitalize(evolutionInfo.shape)}</strong></p>
                                 </div>
                             }
                             {!!evolutionInfo.captureRate &&
-                                <div className="d-flex flex-column align-items-center">
+                                <div className="d-flex flex-column text-center align-items-center">
                                     <h3 style={{color: `${typeColors[pokemonInfo.types[0]]}`}}>Capture Rate</h3>
                                     <p><strong>{evolutionInfo.captureRate}</strong></p>
                                 </div>
                             }
                             {!!evolutionInfo.happiness &&
-                                <div className="d-flex flex-column align-items-center">
+                                <div className="d-flex flex-column text-center align-items-center">
                                     <h3 style={{color: `${typeColors[pokemonInfo.types[0]]}`}}>Happiness</h3>
                                     <p><strong>{evolutionInfo.happiness}</strong></p>
                                 </div>
                             }
                             {!!evolutionInfo.color &&
-                                <div className="d-flex flex-column align-items-center">
+                                <div className="d-flex flex-column text-center align-items-center">
                                     <h3 style={{color: `${typeColors[pokemonInfo.types[0]]}`}}>Color</h3>
                                     <p><strong>{capitalize(evolutionInfo.color)}</strong></p>
                                 </div>
                             }
                             {!!evolutionInfo.habitat &&
-                                <div className="d-flex flex-column align-items-center">
+                                <div className="d-flex flex-column text-center align-items-center">
                                     <h3 style={{color: `${typeColors[pokemonInfo.types[0]]}`}}>Habitat</h3>
                                     <p><strong>{capitalize(evolutionInfo.habitat)}</strong></p>
                                 </div>
                             }
                             {!!evolutionInfo.happiness &&
-                                <div className="d-flex flex-column align-items-center">
+                                <div className="d-flex flex-column text-center align-items-center">
                                     <h3 style={{color: `${typeColors[pokemonInfo.types[0]]}`}}>Happiness</h3>
                                     <p><strong>{evolutionInfo.happiness}</strong></p>
                                 </div>
                             }
                             {!!evolutionInfo.isBaby &&
-                                <div className="d-flex flex-column align-items-center">
+                                <div className="d-flex flex-column text-center align-items-center">
                                     <h3 style={{color: `${typeColors[pokemonInfo.types[0]]}`}}>Is Baby</h3>
                                     <p><strong>{evolutionInfo.isBaby ? "Yes" : "No"}</strong></p>
                                 </div>
                             }
                             {!!evolutionInfo.isLegendary &&
-                                <div className="d-flex flex-column align-items-center">
+                                <div className="d-flex flex-column text-center align-items-center">
                                     <h3 style={{color: `${typeColors[pokemonInfo.types[0]]}`}}>Is Legendary</h3>
                                     <p><strong>{evolutionInfo.isLegendary ? "Yes" : "No"}</strong></p>
                                 </div>
                             }
                             {!!evolutionInfo.isMythical &&
-                                <div className="d-flex flex-column align-items-center">
+                                <div className="d-flex flex-column text-center align-items-center">
                                     <h3 style={{color: `${typeColors[pokemonInfo.types[0]]}`}}>Is Mythical</h3>
                                     <p><strong>{evolutionInfo.isMythical ? "Yes" : "No"}</strong></p>
                                 </div>

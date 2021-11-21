@@ -22,7 +22,7 @@
     100% { transform: translateY(-10px); }
 }
 
-.grid {
+.grid-info {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
 }
@@ -48,19 +48,19 @@
         align-items: center;
         margin: 0 50px;
     }
-    .grid {
+    .grid-info {
         grid-template-columns: repeat(3, 1fr);
     }
 }
 
 @media Screen and (max-width: 600px) {
-    .grid {
+    .grid-info {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media Screen and (max-width: 400px) {
-    .grid {
+    .grid-info {
         grid-template-columns: repeat(1, 1fr);
     }
 }
