@@ -114,18 +114,20 @@ const Home = () => {
                     <div className="filter-grid">
                         <div className="d-flex flex-column align-items-center">
                             <h3 style={{color: "rgb(237,41,57)"}}>Change Cards Per Page</h3>
-                            <TextField 
-                                value={pageSize} 
-                                onChange={handlePageChange} 
-                                label="Cards Per Page" 
-                                InputLabelProps={{
-                                    shrink: true
-                                }}
-                                style={{height: "56px", width: "220px"}}
-                                type={"number"} 
-                                variant="filled"
-                                className="mt-2 mb-3"
-                            />
+                            <FormControl>
+                                <TextField 
+                                    value={pageSize} 
+                                    onChange={handlePageChange} 
+                                    label="Cards Per Page" 
+                                    InputLabelProps={{
+                                        shrink: true
+                                    }}
+                                    style={{height: "56px", width: "220px"}}
+                                    type={"number"} 
+                                    variant="filled"
+                                    className="mt-2 mb-3"
+                                />
+                            </FormControl>
                         </div>
                         <div className="d-flex flex-column align-items-center">
                             <h3 style={{color: "rgb(237,41,57)"}}>Filter Type</h3>
