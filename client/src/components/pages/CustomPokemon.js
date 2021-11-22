@@ -77,10 +77,6 @@ const CustomPokemon = () => {
                                         <TextField 
                                             value={pageSize} 
                                             onChange={handlePageChange} 
-                                            InputLabelProps={{
-                                                shrink: true
-                                            }}
-                                            label="Cards Per Page" 
                                             style={{height: "56px", width: "220px"}}
                                             type={"number"} 
                                             variant="filled"

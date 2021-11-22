@@ -117,11 +117,7 @@ const Home = () => {
                             <FormControl>
                                 <TextField 
                                     value={pageSize} 
-                                    onChange={handlePageChange} 
-                                    label="Cards Per Page" 
-                                    InputLabelProps={{
-                                        shrink: true
-                                    }}
+                                    onChange={handlePageChange}
                                     style={{height: "56px", width: "220px"}}
                                     type={"number"} 
                                     variant="filled"
