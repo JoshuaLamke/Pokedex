@@ -15,7 +15,7 @@ const MoveCardContainer = ({moveRows, pageSize, picture, filter, typeFilter, sor
                 passSearchFilter = name.toLowerCase().includes(filter.toLowerCase().trim());
             }
             if(typeFilter) {
-                if(typeFilter !== "All type") {
+                if(typeFilter !== "All Types") {
                     passTypeFilter = type.includes(typeFilter);   
                 }
             }
