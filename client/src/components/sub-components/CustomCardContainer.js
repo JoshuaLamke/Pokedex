@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import "../../styles/card-container.css";
 import CustomCard from "./CustomCard";
 import { capitalize } from "../utils/utility";
+import { DoubleArrow } from "@material-ui/icons";
+import { Button } from '@material-ui/core';
+
 
 const CustomCardContainer = ({pokemon, pageSize, filter, typeFilter, sortBy}) => {
     const [page, setPage] = useState(0);
@@ -60,38 +63,38 @@ const CustomCardContainer = ({pokemon, pageSize, filter, typeFilter, sortBy}) =>
                 </div>
             </div>
             <div className="container d-flex justify-content-center mb-3">
-                <button 
+                <Button 
+                    className="page-button"
+                    variant="contained"
                     disabled={page <= 0} 
                     onClick={() => {setPage(0)}} 
-                    style={{width: "50px", fontSize: 14, marginRight: "2px", color: "white"}} 
-                    className="btn btn-danger"
                 >
-                    {"<<"}
-                </button>
-                <button 
+                    <DoubleArrow style={{transform: "rotate(180deg)"}}/>
+                </Button>
+                <Button 
+                    className="page-button"
+                    variant="contained"
                     disabled={page <= 0} 
-                    onClick={() => {setPage(page - 1)}} 
-                    style={{width: "80px", fontSize: 14, marginRight: "2px", color: "white"}} 
-                    className="btn btn-danger"
+                    onClick={() => {setPage(page - 1)}}
                 >
-                    Previous
-                </button>
-                <button 
+                    Prev
+                </Button>
+                <Button 
+                    className="page-button"
+                    variant="contained"                
                     disabled={page >= Math.ceil(filteredPokemon.length/pageSize) - 1} 
                     onClick={() => {setPage(page + 1)}} 
-                    style={{width: "80px", fontSize: 14, marginRight: "2px", color: "white"}} 
-                    className="btn btn-danger"
                 >
                     Next
-                </button>
-                <button 
+                </Button>
+                <Button 
+                    className="page-button"
+                    variant="contained"
                     disabled={page >= Math.ceil(filteredPokemon.length/pageSize) - 1} 
                     onClick={() => {setPage(Math.ceil(filteredPokemon.length/pageSize) - 1)}} 
-                    style={{width: "50px", fontSize: 14, color: "white"}} 
-                    className="btn btn-danger"
                 >
-                    {">>"}
-                </button>
+                    <DoubleArrow />
+                </Button>
             </div>
         </>
     )

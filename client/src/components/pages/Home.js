@@ -5,10 +5,11 @@ import CardContainer from '../sub-components/CardContainer';
 import { NativeSelect, FormControl } from '@mui/material'
 import Footer from '../sub-components/Footer';
 import PokedexLogo from '../../assets/PokedexLogo.png';
-import { TextField } from "@material-ui/core"
+import { TextField, Button } from "@material-ui/core"
 import { typeColors } from '../utils/typeColors';
 import '../../styles/Home.css';
 import { regions } from '../utils/regions';
+import GlobalFilter from '../table/GlobalFilter';
 
 const Home = () => {
 
@@ -97,12 +98,9 @@ const Home = () => {
                     {title: "Home", onClick: () => {history.push("/")}},
                     {title: "Previous Pokemon", onClick: () => {handlePrevious()}},
                     {title: "Next Pokemon", onClick: () => {handleNext()}},
-                    {title: "Create Pokemon", onClick: () => {history.push("/create")}},
-                    {title: "View Custom Pokemon", onClick: () => {history.push("/custom-pokemons")}}
+                    {title: "Create Pokemon", onClick: () => {history.push("/create")}}
                 ]}
                 color={`${"rgb(237,41,57)"}`}
-                onChange={setFilter} 
-                placeholder={"Search for pokemon"}
             />
             <div className="d-flex flex-column align-items-center w-100">
                 <div className="container-fluid">
@@ -182,6 +180,24 @@ const Home = () => {
                                     </option>
                                 </NativeSelect>
                             </FormControl>
+                        </div>
+                        <div className="d-flex flex-column align-items-center justify-content-between">
+                            <h3 style={{color: "rgb(237,41,57)"}}>Search Pokemon</h3>
+                            <div style={{height: "56px", width: "220px"}}>
+                                <GlobalFilter onChange={setFilter} placeholder={"Search"} filter={filter}/>
+                            </div>
+                        </div>
+                        <div className="d-flex flex-column align-items-center justify-content-between">
+                            <h3 style={{color: "rgb(237,41,57)"}}>Custom Pokemon</h3>
+                            <div style={{height: "56px", width: "220px"}} className="d-flex justify-content-center align-items-center mb-2">
+                                <Button 
+                                    variant="contained"
+                                    id="custom-pokemon-button"
+                                    onClick={() => {history.push("/custom-pokemons")}}
+                                >
+                                    View Custom Pokemon
+                                </Button>
+                            </div>
                         </div>
                     </div>
                     {pokemonRows.length ? 

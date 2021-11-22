@@ -6,6 +6,7 @@ import Footer from '../sub-components/Footer';
 import { FormControl, TextField, NativeSelect } from '@mui/material';
 import { typeColors } from '../utils/typeColors';
 import PokedexLogo from '../../assets/PokedexLogo.png';
+import GlobalFilter from '../table/GlobalFilter';
 
 
 const CustomPokemon = () => {
@@ -119,6 +120,12 @@ const CustomPokemon = () => {
                                             </option>
                                         </NativeSelect>
                                     </FormControl>
+                                </div>
+                                <div className="d-flex flex-column align-items-center justify-content-between">
+                                    <h3 style={{color: "rgb(176,38,255)"}}>Search Pokemon</h3>
+                                    <div style={{height: "56px", width: "220px"}}>
+                                        <GlobalFilter onChange={setFilter} placeholder={"Search"} filter={filter}/>
+                                    </div>
                                 </div>
                             </div>
                         </div>

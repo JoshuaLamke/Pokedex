@@ -1,7 +1,7 @@
 import React from 'react';
 import SearchBar from 'material-ui-search-bar';
 
-const GlobalFilter = ({placeholder, onChange, }) => {
+const GlobalFilter = ({placeholder, onChange, filter }) => {
     return (
         <SearchBar 
             className="my-2"
@@ -12,6 +12,7 @@ const GlobalFilter = ({placeholder, onChange, }) => {
                 height: "30px", 
                 marginLeft: "5px"
             }}
+            value={filter}
         />
     )
 }

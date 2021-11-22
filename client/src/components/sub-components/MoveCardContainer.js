@@ -1,10 +1,49 @@
 import React, { useState, useEffect } from 'react';
+import { Button } from '@material-ui/core';
+import { DoubleArrow } from '@material-ui/icons';
 import  Card from "./Card";
 import "../../styles/card-container.css";
 
-const MoveCardContainer = ({moveRows, pageSize, picture, filter}) => {
+const MoveCardContainer = ({moveRows, pageSize, picture, filter, typeFilter, sortBy}) => {
     const [page, setPage] = useState(0);
-    const filteredMoves = moveRows.filter(({name}) => {return filter ? name.toLowerCase().includes(filter.toLowerCase().trim()) : true});
+    const filteredMoves = moveRows.filter(({name, type}) => {
+        let passSearchFilter = true;
+        let passTypeFilter = true;
+
+        if(filter || typeFilter) {
+            if(filter) {
+                passSearchFilter = name.toLowerCase().includes(filter.toLowerCase().trim());
+            }
+            if(typeFilter) {
+                if(typeFilter !== "All type") {
+                    passTypeFilter = type.includes(typeFilter);   
+                }
+            }
+            return passSearchFilter && passTypeFilter;
+        } else {
+            return true;
+        }
+    }).sort((a, b) => {
+        if(sortBy === "Name (Asc)") {
+            if(a.name.toUpperCase() < b.name.toUpperCase()) {
+                return -1;
+            } else if(a.name.toUpperCase() > b.name.toUpperCase()) {
+                return 1;
+            } else {
+                return 0;
+            }
+        } else if(sortBy === "Name (Desc)") {
+            if(a.name.toUpperCase() > b.name.toUpperCase()) {
+                return -1;
+            } else if(a.name.toUpperCase() < b.name.toUpperCase()) {
+                return 1;
+            } else {
+                return 0;
+            }
+        } else {
+            return 0;
+        }
+    });
 
     useEffect(() => {
         setPage(0);
@@ -25,38 +64,38 @@ const MoveCardContainer = ({moveRows, pageSize, picture, filter}) => {
                 </div>
             </div>
             <div className="container d-flex justify-content-center mb-3">
-                <button 
+                <Button 
+                    className="page-button"
+                    variant="contained"
                     disabled={page <= 0} 
                     onClick={() => {setPage(0)}} 
-                    style={{width: "50px", fontSize: 14, marginRight: "2px", color: "white"}} 
-                    className="btn btn-danger"
                 >
-                    {"<<"}
-                </button>
-                <button 
+                    <DoubleArrow style={{transform: "rotate(180deg)"}}/>
+                </Button>
+                <Button 
+                    className="page-button"
+                    variant="contained"
                     disabled={page <= 0} 
-                    onClick={() => {setPage(page - 1)}} 
-                    style={{width: "80px", fontSize: 14, marginRight: "2px", color: "white"}} 
-                    className="btn btn-danger"
+                    onClick={() => {setPage(page - 1)}}
                 >
-                    Previous
-                </button>
-                <button 
+                    Prev
+                </Button>
+                <Button 
+                    className="page-button"
+                    variant="contained"                
                     disabled={page >= Math.ceil(filteredMoves.length/pageSize) - 1} 
                     onClick={() => {setPage(page + 1)}} 
-                    style={{width: "80px", fontSize: 14, marginRight: "2px", color: "white"}} 
-                    className="btn btn-danger"
                 >
                     Next
-                </button>
-                <button 
+                </Button>
+                <Button 
+                    className="page-button"
+                    variant="contained"
                     disabled={page >= Math.ceil(filteredMoves.length/pageSize) - 1} 
                     onClick={() => {setPage(Math.ceil(filteredMoves.length/pageSize) - 1)}} 
-                    style={{width: "50px", fontSize: 14, color: "white"}} 
-                    className="btn btn-danger"
                 >
-                    {">>"}
-                </button>
+                    <DoubleArrow />
+                </Button>
             </div>
         </>
     )

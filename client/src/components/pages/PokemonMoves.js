@@ -3,8 +3,11 @@ import { useLocation, useHistory } from 'react-router-dom';
 import { capitalize } from '../utils/utility';
 import NavBar from '../sub-components/NavBar';
 import MoveCardContainer from "../sub-components/MoveCardContainer";
-import CardFilter from '../sub-components/CardFilter';
 import Footer from '../sub-components/Footer';
+import { typeColors } from '../utils/typeColors';
+import { FormControl, NativeSelect, TextField, Button } from '@material-ui/core';
+import GlobalFilter from '../table/GlobalFilter';
+import "../../styles/pokemonMoves.css";
 
 const PokemonMoves = () => {
     const [moveRows, setMoveRows] = useState([]);
@@ -14,8 +17,10 @@ const PokemonMoves = () => {
     const pictureURL = location.state.url;
     const pokemonName = location.state.name;
     const id = location.state.id;
-    const [cardPageSize, setCardPageSize] = useState(4);
+    const [pageSize, setPageSize] = useState(4);
     const [filter, setFilter] = useState();
+    const [typeFilter, setTypeFilter] = useState("");
+    const [sortFilter, setSortFilter] = useState("Name (Asc)");
 
     useEffect(() => {
         let mounted = true;
@@ -37,6 +42,16 @@ const PokemonMoves = () => {
             mounted = false;
         }
     }, [moves])
+
+    const handlePageChange = (e) => {
+        setPageSize(e.target.value);
+    }
+    const handleTypeChange = (e) => {
+        setTypeFilter(e.target.value);
+    }
+    const handleSortChange = (e) => {
+        setSortFilter(e.target.value);
+    }
 
     return (
         <div 
@@ -72,21 +87,80 @@ const PokemonMoves = () => {
             <div className="d-flex flex-column align-items-center">
                 <h1 style={{color: `${"#cc0000"}`}}>Moves For {pokemonName}</h1>
                 <div className="container d-flex flex-column align-items-center">
-                    <CardFilter onChange={setCardPageSize} placeholder={"Set cards per page"} type={"number"}/>
-                    <CardFilter onChange={setFilter} placeholder={"Search for moves"} type={"text"}/>
+                    <div className="filter-grid">
+                        <div className="d-flex flex-column align-items-center">
+                            <h3 style={{color: "rgb(237,41,57)"}}>Change Cards Per Page</h3>
+                            <FormControl>
+                                <TextField 
+                                    value={pageSize} 
+                                    onChange={handlePageChange}
+                                    style={{height: "56px", width: "220px"}}
+                                    type={"number"} 
+                                    variant="filled"
+                                    className="mt-2 mb-3"
+                                />
+                            </FormControl>
+                        </div>
+                        <div className="d-flex flex-column align-items-center">
+                            <h3 style={{color: "rgb(237,41,57)"}}>Filter Type</h3>
+                            <FormControl>
+                                <NativeSelect
+                                    onChange={handleTypeChange}
+                                    value={typeFilter}
+                                    variant="filled"
+                                    className="mt-2 mb-3"
+                                    style={{height: "56px", width: "220px"}}
+                                >
+                                    <option key={"All Types"} className="ms-1" value={"All Types"}>{"All Types"}</option>
+                                    {Object.keys(typeColors)
+                                    .sort()
+                                    .map((key) => <option key={key} value={key}>{key}</option>)}
+                                </NativeSelect>
+                            </FormControl>
+                        </div>
+                        <div className="d-flex flex-column align-items-center">
+                            <h3 style={{color: "rgb(237,41,57)"}}>Sort Pokemon</h3>
+                            <FormControl>
+                                <NativeSelect
+                                    onChange={handleSortChange}
+                                    value={sortFilter}
+                                    variant="filled"
+                                    className="mt-2 mb-3"
+                                    style={{height: "56px", width: "220px"}}
+                                >
+                                    <option key={"Name (Asc)"} value={"Name (Asc)"}>
+                                        Name (Asc)
+                                    </option>
+                                    <option key={"Name (Desc)"} value={"Name (Desc)"}>
+                                        Name (Desc)
+                                    </option>
+                                </NativeSelect>
+                            </FormControl>
+                        </div>
+                        <div className="d-flex flex-column align-items-center justify-content-between">
+                            <h3 style={{color: "rgb(237,41,57)"}}>Search Moves</h3>
+                            <div style={{height: "56px", width: "220px"}}>
+                                <GlobalFilter onChange={setFilter} placeholder={"Search"} filter={filter}/>
+                            </div>
+                        </div>
+                    </div>
                     <MoveCardContainer 
                         moveRows={moveRows} 
                         picture={pictureURL} 
-                        pageSize={cardPageSize ? cardPageSize : 4} 
+                        pageSize={pageSize ? pageSize : 4} 
                         filter={filter ? filter : ""}
+                        sortBy={sortFilter}
+                        typeFilter={typeFilter}
                     />
                 </div>
-                <button 
+                <Button 
                     onClick={() => {history.push("/view", {name: pokemonName, id: id})}} 
-                    className="btn btn-success mb-2"
+                    variant="contained"
+                    className="mb-2"
+                    id="back-to-info-btn"
                 >
                     Back To {pokemonName} Info
-                </button>
+                </Button>
             </div> : ""
             }
             {(!moveRows.length && id < 808) ?

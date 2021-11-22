@@ -19,6 +19,11 @@
     transform: scale(1.03);
 }
 
+.page-button:hover {
+    background: rgb(237,41,57)!important;
+    color: whitesmoke;
+}
+
 @-webkit-keyframes card-mover {
     0% { transform: translateY(0px); }
     100% { transform: translateY(-3px); }
@@ -40,7 +45,6 @@
         grid-template-columns: repeat(2, 1fr);
     }    
 }
-
 
 @media Screen and (min-width: 960px) {
     .grid {

@@ -3,6 +3,11 @@
     height: auto;
 }
 
+#back-to-moves-btn:hover {
+    background: rgb(38, 104, 38);
+    color: whitesmoke;
+}
+
 .list-group {
     width: 25%;
 }

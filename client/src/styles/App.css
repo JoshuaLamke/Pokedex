@@ -3,11 +3,6 @@ body {
     font-family: 'Alegreya', serif;
 }
 
-.btn:hover {
-    transform: scale(1.03);
-    transition: all .2s ease-in;
-}
-
 #pokemon-img, #pokemon-image {
     -webkit-animation: mover 2s ease-in-out infinite alternate;
     animation: mover 2s ease-in-out infinite alternate;

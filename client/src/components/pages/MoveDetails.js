@@ -5,6 +5,7 @@ import '../../styles/moveDetails.css'
 import { typeColors } from '../utils/typeColors';
 import Bar from '../sub-components/Bar';
 import Footer from '../sub-components/Footer';
+import { Button } from '@material-ui/core';
 
 
 const MoveDetails = () => {
@@ -71,14 +72,16 @@ const MoveDetails = () => {
                 </div> 
             </div> 
             <div className="container d-flex justify-content-center">
-                <button 
-                    className="btn btn-success mb-3" 
+                <Button 
                     onClick={() => {
                         history.push("/moves", {name: moveInfo.pokemonName, url: moveInfo.url, id: moveInfo.id, moves: moveInfo.moves})
-                    }}
+                    }}                    
+                    variant="contained"
+                    className="mb-2"
+                    id="back-to-moves-btn"
                 >
                     Back To Moves
-                </button>
+                </Button>
             </div>
             <div style={{flex: 1}}></div>
             <Footer />

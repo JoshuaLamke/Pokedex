@@ -5,6 +5,11 @@
     row-gap: 10px;
 }
 
+#custom-pokemon-button:hover {
+    background: rgb(237,41,57);
+    color: whitesmoke;
+}
+
 @media Screen and (max-width: 1000px) {
     .filter-grid {
         grid-template-columns: repeat(2, 1fr);

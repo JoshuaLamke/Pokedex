@@ -11,6 +11,7 @@ import GameVersionSelector from '../sub-components/GameVersionSelector';
 import Abilities from '../sub-components/Abilities';
 import VERSIONS from '../utils/versions';
 import { getImgByType } from '../utils/typeImages';
+import { Button } from '@material-ui/core';
 
 const PokemonInfo = () => {
     const [pokemonInfo, setPokemonInfo] = useState({});
@@ -176,7 +177,7 @@ const PokemonInfo = () => {
                             {!!evolutionInfo.eggGroups.length &&
                                 <div className="d-flex flex-column text-center align-items-center">
                                     <h3 style={{color: `${typeColors[pokemonInfo.types[0]]}`}}>Egg Groups</h3>
-                                    {evolutionInfo.eggGroups.map((group) => <p style={{marginBottom: 0}}>{capitalize(group)}</p>)}
+                                    {evolutionInfo.eggGroups.map((group, index) => <p key={index} style={{marginBottom: 0}}>{capitalize(group)}</p>)}
                                 </div>
                             }
                             {!!evolutionInfo.shape &&
@@ -207,12 +208,6 @@ const PokemonInfo = () => {
                                 <div className="d-flex flex-column text-center align-items-center">
                                     <h3 style={{color: `${typeColors[pokemonInfo.types[0]]}`}}>Habitat</h3>
                                     <p>{capitalize(evolutionInfo.habitat)}</p>
-                                </div>
-                            }
-                            {!!evolutionInfo.happiness &&
-                                <div className="d-flex flex-column text-center align-items-center">
-                                    <h3 style={{color: `${typeColors[pokemonInfo.types[0]]}`}}>Happiness</h3>
-                                    <p>{evolutionInfo.happiness}</p>
                                 </div>
                             }
                             {!!evolutionInfo.isBaby &&
@@ -262,9 +257,9 @@ const PokemonInfo = () => {
                     <div id="evo-chain-container" style={{color: `${typeColors[pokemonInfo.types[0]]}`, alignSelf: "center"}}>
                         <h2>Evolution Chain</h2>
                         <div id="evolution-container">
-                            {evolutionInfo.evolutionChain.map((pokemon) => {
+                            {evolutionInfo.evolutionChain.map((pokemon, index) => {
                             return (
-                                <div className="d-flex flex-column align-items-center">
+                                <div className="d-flex flex-column align-items-center" key={index}>
                                     <h2>{capitalize(pokemon.name)}</h2>
                                         <img 
                                             onClick={() => history.push("/view", {id: pokemon.id, name: pokemon.name, type: type})}
@@ -286,15 +281,14 @@ const PokemonInfo = () => {
                      <>
                         <LevelUpMoves gameVersion={version} moves={pokemonMoves} pokemonInfo={pokemonInfo}/>
                         <div className="container-fluid d-flex flex-column align-items-center">
-                            <button 
-                                style={{
-                                    marginBottom: "1em", 
-                                    background: typeColors[pokemonInfo.types[0]]}} 
-                                    onClick={() => handleViewMoves()} 
-                                    className="btn text-light"
+                            <Button 
+                                id="to-moves-button"
+                                variant="contained"
+                                className="mb-2"
+                                onClick={() => handleViewMoves()} 
                             >
                                 View All Move Info
-                            </button>
+                            </Button>
                         </div>
                      </> :
                      <div className="text-center">
