@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FormData } from '../utils/CreateFormData';
 import Footer from '../sub-components/Footer';
+import { Button } from '@material-ui/core';
 
 
 const CreatePokemon = () => {
@@ -213,13 +214,13 @@ const CreatePokemon = () => {
                         />
                     </Form.Group>
                     <div className="container d-flex justify-content-center mb-2">
-                        <button 
+                        <Button 
                             disabled={page <= 1} 
                             onClick={() => {setPage(page - 1);}} 
                             type="button"
                             data-testid="back-button"
                             style={{
-                                width: `${page === 4 ? "135px" : "100px"}`, 
+                                width: `${page === 4 ? "165px" : "100px"}`, 
                                 background: "rgb(176,38,255)",
                                 boxShadow: "none", 
                                 fontSize: 14,
@@ -229,8 +230,8 @@ const CreatePokemon = () => {
                             className="btn"
                         >
                             Back
-                        </button>
-                        <button 
+                        </Button>
+                        <Button 
                             disabled={page >= 4} 
                             onClick={() => {setPage(page + 1);}} 
                             type="button"
@@ -246,21 +247,21 @@ const CreatePokemon = () => {
                             className={`btn ${page === 4 ? "hidden" : ""}`}
                         >
                             Next
-                        </button>
+                        </Button>
                     </div> 
                     <div className="container d-flex justify-content-center mb-2">
-                        <button
+                        <Button
                             type="submit"
                             className={`btn text-light ${page !== 4 ? "hidden" : ""}`}
                             style={{
                                 background: "rgb(176,38,255)",
                                 boxShadow: "none",
-                                width: "135px"
+                                width: "165px"
                             }}
                             disabled={disabled()}
                         >
                             Create Pokemon
-                        </button>
+                        </Button>
                     </div>
                 </Form> 
             </div>

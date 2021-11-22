@@ -2,12 +2,13 @@ import React from 'react';
 import { typeColors } from '../utils/typeColors';
 import '../../styles/type-buttons.css';
 import { getImgByType } from '../utils/typeImages';
+import { Button } from "@material-ui/core";
 
 const TypeButtons = ({clickedButtons, setClickedButtons}) => {
     const buttons = [];
     for(const key in typeColors) {
         buttons.push(
-            <button 
+            <Button 
                 key={key}
                 style={{ 
                     background: typeColors[key],
@@ -41,7 +42,7 @@ const TypeButtons = ({clickedButtons, setClickedButtons}) => {
                     style={{borderRadius: "50%", boxShadow: `0px 0px 5px black`}} 
                     alt="type-button" 
                 />
-            </button>
+            </Button>
         )
     }
     return (

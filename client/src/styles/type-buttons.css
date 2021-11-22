@@ -1,5 +1,5 @@
 .type-button {
-    width: 110px;
+    width: 130px;
     height: 30px;
     border-radius: 5px;
     outline: none;
@@ -18,7 +18,13 @@
     display: grid;
     gap: 16px;
     padding: 16px;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1, 1fr);
+}
+
+@media Screen and (min-width: 350px) {
+    .type-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }    
 }
 
 @media Screen and (min-width: 500px) {
@@ -27,13 +33,13 @@
     }    
 }
 
-@media Screen and (min-width: 850px) {
+@media Screen and (min-width: 900px) {
     .type-grid {
         grid-template-columns: repeat(6, 1fr);
     }    
 }
 
-@media Screen and (min-width: 1300px) {
+@media Screen and (min-width: 1350px) {
     .type-grid {
         grid-template-columns: repeat(9, 1fr);
     }    
