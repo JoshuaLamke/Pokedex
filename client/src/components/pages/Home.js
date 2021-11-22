@@ -145,8 +145,7 @@ const Home = () => {
                         <div className="d-flex flex-column align-items-center">
                             <h3 style={{color: "rgb(237,41,57)"}}>Filter Regions</h3>
                             <FormControl>
-                                <NativeSelect
-                                    native={true}                                
+                                <NativeSelect                               
                                     onChange={handleRegionChange}
                                     value={regionFilter}
                                     variant="filled"
@@ -163,7 +162,6 @@ const Home = () => {
                             <h3 style={{color: "rgb(237,41,57)"}}>Sort Pokemon</h3>
                             <FormControl>
                                 <NativeSelect
-                                    native={true}
                                     onChange={handleSortChange}
                                     value={sortFilter}
                                     variant="filled"
