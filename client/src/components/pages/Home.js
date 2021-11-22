@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import NavBar from '../sub-components/NavBar';
 import CardContainer from '../sub-components/CardContainer';
-import { MenuItem, Select, FormControl } from '@mui/material'
+import { NativeSelect, FormControl } from '@mui/material'
 import Footer from '../sub-components/Footer';
 import PokedexLogo from '../../assets/PokedexLogo.png';
 import { TextField } from "@material-ui/core"
@@ -118,6 +118,9 @@ const Home = () => {
                                 value={pageSize} 
                                 onChange={handlePageChange} 
                                 label="Cards Per Page" 
+                                InputLabelProps={{
+                                    shrink: true
+                                }}
                                 style={{height: "56px", width: "220px"}}
                                 type={"number"} 
                                 variant="filled"
@@ -127,24 +130,25 @@ const Home = () => {
                         <div className="d-flex flex-column align-items-center">
                             <h3 style={{color: "rgb(237,41,57)"}}>Filter Type</h3>
                             <FormControl>
-                                <Select
+                                <NativeSelect
                                     onChange={handleTypeChange}
                                     value={typeFilter}
                                     variant="filled"
                                     className="mt-2 mb-3"
                                     style={{height: "56px", width: "220px"}}
                                 >
-                                    <MenuItem key={"All Types"} value={"All Types"}>All Types</MenuItem>
+                                    <option key={"All Types"} className="ms-1" value={"All Types"}>{"All Types"}</option>
                                     {Object.keys(typeColors)
                                     .sort()
-                                    .map((key) => <MenuItem key={key} value={key}>{key}</MenuItem>)}
-                                </Select>
+                                    .map((key) => <option key={key} value={key}>{key}</option>)}
+                                </NativeSelect>
                             </FormControl>
                         </div>
                         <div className="d-flex flex-column align-items-center">
                             <h3 style={{color: "rgb(237,41,57)"}}>Filter Regions</h3>
                             <FormControl>
-                                <Select
+                                <NativeSelect
+                                    native={true}                                
                                     onChange={handleRegionChange}
                                     value={regionFilter}
                                     variant="filled"
@@ -152,34 +156,35 @@ const Home = () => {
                                     style={{height: "56px", width: "220px"}}
                                 >
                                     {Object.keys(regions).map((key) => {
-                                        return <MenuItem key={key} value={key}>{key}</MenuItem>
+                                        return <option key={key} value={key}>{key}</option>
                                     })}
-                                </Select>
+                                </NativeSelect>
                             </FormControl>
                         </div>
                         <div className="d-flex flex-column align-items-center">
                             <h3 style={{color: "rgb(237,41,57)"}}>Sort Pokemon</h3>
                             <FormControl>
-                                <Select
+                                <NativeSelect
+                                    native={true}
                                     onChange={handleSortChange}
                                     value={sortFilter}
                                     variant="filled"
                                     className="mt-2 mb-3"
                                     style={{height: "56px", width: "220px"}}
                                 >
-                                    <MenuItem key={"Number (Asc)"} value={"Number (Asc)"}>
+                                    <option key={"Number (Asc)"} value={"Number (Asc)"}>
                                         Number (Asc)
-                                    </MenuItem>
-                                    <MenuItem key={"Number (Desc)"} value={"Number (Desc)"}>
+                                    </option>
+                                    <option key={"Number (Desc)"} value={"Number (Desc)"}>
                                         Number (Desc)
-                                    </MenuItem>
-                                    <MenuItem key={"Name (Asc)"} value={"Name (Asc)"}>
+                                    </option>
+                                    <option key={"Name (Asc)"} value={"Name (Asc)"}>
                                         Name (Asc)
-                                    </MenuItem>
-                                    <MenuItem key={"Name (Desc)"} value={"Name (Desc)"}>
+                                    </option>
+                                    <option key={"Name (Desc)"} value={"Name (Desc)"}>
                                         Name (Desc)
-                                    </MenuItem>
-                                </Select>
+                                    </option>
+                                </NativeSelect>
                             </FormControl>
                         </div>
                     </div>

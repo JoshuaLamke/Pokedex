@@ -3,7 +3,7 @@ import CustomCardContainer from '../sub-components/CustomCardContainer';
 import NavBar from '../sub-components/NavBar';
 import { useHistory } from 'react-router';
 import Footer from '../sub-components/Footer';
-import { FormControl, TextField, Select, MenuItem } from '@mui/material';
+import { FormControl, TextField, NativeSelect } from '@mui/material';
 import { typeColors } from '../utils/typeColors';
 import PokedexLogo from '../../assets/PokedexLogo.png';
 
@@ -76,6 +76,9 @@ const CustomPokemon = () => {
                                     <TextField 
                                         value={pageSize} 
                                         onChange={handlePageChange} 
+                                        InputLabelProps={{
+                                            shrink: true
+                                        }}
                                         label="Cards Per Page" 
                                         style={{height: "56px", width: "220px"}}
                                         type={"number"} 
@@ -86,37 +89,37 @@ const CustomPokemon = () => {
                                 <div className="d-flex flex-column align-items-center">
                                     <h3 style={{color: "rgb(176,38,255)"}}>Filter Type</h3>
                                     <FormControl>
-                                        <Select
+                                        <NativeSelect
                                             onChange={handleTypeChange}
                                             value={typeFilter}
                                             variant="filled"
                                             className="mt-2 mb-3"
                                             style={{height: "56px", width: "220px"}}
                                             >
-                                            <MenuItem key={"All Types"} value={"All Types"}>All Types</MenuItem>
+                                            <option key={"All Types"} value={"All Types"}>All Types</option>
                                             {Object.keys(typeColors)
                                             .sort()
-                                            .map((key) => <MenuItem key={key} value={key}>{key}</MenuItem>)}
-                                        </Select>
+                                            .map((key) => <option key={key} value={key}>{key}</option>)}
+                                        </NativeSelect>
                                     </FormControl>
                                 </div>
                                 <div className="d-flex flex-column align-items-center">
                                     <h3 style={{color: "rgb(176,38,255)"}}>Sort Pokemon</h3>
                                     <FormControl>
-                                        <Select
+                                        <NativeSelect
                                             onChange={handleSortChange}
                                             value={sortFilter}
                                             variant="filled"
                                             className="mt-2 mb-3"
                                             style={{height: "56px", width: "220px"}}
                                             >
-                                            <MenuItem key={"Name (Asc)"} value={"Name (Asc)"}>
+                                            <option key={"Name (Asc)"} value={"Name (Asc)"}>
                                                 Name (Asc)
-                                            </MenuItem>
-                                            <MenuItem key={"Name (Desc)"} value={"Name (Desc)"}>
+                                            </option>
+                                            <option key={"Name (Desc)"} value={"Name (Desc)"}>
                                                 Name (Desc)
-                                            </MenuItem>
-                                        </Select>
+                                            </option>
+                                        </NativeSelect>
                                     </FormControl>
                                 </div>
                             </div>
