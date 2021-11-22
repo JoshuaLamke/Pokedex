@@ -1,5 +1,5 @@
 .type-button {
-    width: 100px;
+    width: 110px;
     height: 30px;
     border-radius: 5px;
     outline: none;
@@ -27,13 +27,13 @@
     }    
 }
 
-@media Screen and (min-width: 768px) {
+@media Screen and (min-width: 850px) {
     .type-grid {
         grid-template-columns: repeat(6, 1fr);
     }    
 }
 
-@media Screen and (min-width: 1200px) {
+@media Screen and (min-width: 1300px) {
     .type-grid {
         grid-template-columns: repeat(9, 1fr);
     }    
