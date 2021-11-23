@@ -6,6 +6,7 @@ import '../../styles/pokemonInfo.css'
 import Bar from '../sub-components/Bar';
 import { typeColors } from '../utils/typeColors';
 import Footer from '../sub-components/Footer';
+import { Button } from "@material-ui/core";
 
 
 const CustomPokemonInfo = () => {
@@ -108,8 +109,7 @@ const CustomPokemonInfo = () => {
                 </ul>
             </div> 
             <div className="container-fluid d-flex flex-column align-items-center">
-                <h2 className="mb-2" style={{color: `${typeColors[pokemonInfo.types[0]]}`}}>Moves</h2>
-                <button 
+                <Button
                     style={{
                         marginBottom: "1em", 
                         background: typeColors[pokemonInfo.types[0]]}} 
@@ -117,7 +117,7 @@ const CustomPokemonInfo = () => {
                         className="btn text-light"
                 >
                     Back
-                </button>
+                </Button>
             </div>
             <div style={{flex: 1}}></div>
             <Footer color="rgb(176,38,255)"/>

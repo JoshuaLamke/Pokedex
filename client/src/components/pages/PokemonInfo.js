@@ -12,6 +12,7 @@ import Abilities from '../sub-components/Abilities';
 import VERSIONS from '../utils/versions';
 import { getImgByType } from '../utils/typeImages';
 import { Button } from '@material-ui/core';
+import { DoubleArrow } from "@material-ui/icons"
 
 const PokemonInfo = () => {
     const [pokemonInfo, setPokemonInfo] = useState({});
@@ -257,23 +258,26 @@ const PokemonInfo = () => {
                     <div id="evo-chain-container" style={{color: `${typeColors[pokemonInfo.types[0]]}`, alignSelf: "center"}}>
                         <h2>Evolution Chain</h2>
                         <div id="evolution-container">
-                            {evolutionInfo.evolutionChain.map((pokemon, index) => {
-                            return (
-                                <div className="d-flex flex-column align-items-center" key={index}>
-                                    <h2>{capitalize(pokemon.name)}</h2>
-                                        <img 
-                                            onClick={() => history.push("/view", {id: pokemon.id, name: pokemon.name, type: type})}
-                                            height="200px" 
-                                            width="200px" 
-                                            className="mx-5 btn" 
-                                            id="evo-img"
-                                            src={pokemon.image} 
-                                            alt={pokemon.name} 
-                                            style={{cursor: "pointer"}}
-                                        />
-                                </div>
-                            )
-                            })}
+                            {evolutionInfo.evolutionChain.map((pokemon, index) => 
+                            <div className={`d-flex ${pokemon.length > 2 ? "flex-column" : ""} justify-content-center`}>
+                                {pokemon.map((poke) => 
+                                    <div className="d-flex flex-column align-items-center" key={index}>
+                                        <DoubleArrow color="action" style={{transform: "rotate(90deg)"}}/>
+                                        <h2>{capitalize(poke.name)}</h2>
+                                        <div className="d-flex flex-column justify-content-center">
+                                            <img 
+                                                onClick={() => history.push("/view", {id: poke.id, name: poke.name, type: type})}
+                                                className="mx-2 evo-img btn" 
+                                                id="evo-img"
+                                                src={poke.image} 
+                                                alt={poke.name} 
+                                                style={{cursor: "pointer"}}
+                                            />
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                            )}
                         </div>
                     </div>
                     }

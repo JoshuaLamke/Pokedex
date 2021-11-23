@@ -222,15 +222,30 @@ app.get("/custom-pokemon", async (req, res) => {
 
 const getEvoChain = async (responseJSON) => {
     let evoChain = responseJSON.chain;
-    let names = []
+    let names = [[evoChain["species"]["name"]]];
+    //Array of names without order of evolution to make it easier to fetch info using promise.all
+    let namesUnchained = [evoChain["species"]["name"]];
+    evoChain = evoChain['evolves_to']
     do {
-        const evoDetails = evoChain['species']['name'];
+        let arr = [];
+        for(let i = 0; i < evoChain.length; i++) {
+            arr.push(evoChain[i]["species"]["name"]);
+            namesUnchained.push(evoChain[i]["species"]["name"]);
+        }
+        names.push(arr);
+        let temp = evoChain;
+        evoChain = [];
+        for(let i = 0; i < temp.length; i++) {
+            for(let j = 0; j < temp[i]["evolves_to"].length; j++) {
+                evoChain.push(temp[i]["evolves_to"][j]);
+            }
+        }
 
-        names.push(evoDetails);
-
-        evoChain = evoChain['evolves_to'][0];
-    } while (!!evoChain && evoChain.hasOwnProperty('evolves_to'));
-    let responses = await Promise.all(names.map((name) => fetch(`https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`)));
+    } while(!!evoChain && evoChain[0]) 
+    if(namesUnchained.includes("urshifu")) {
+        namesUnchained[namesUnchained.indexOf("urshifu")] = "urshifu-single-strike";
+    }
+    let responses = await Promise.all(namesUnchained.map((name) => fetch(`https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`)));
     const responsesJSON = await Promise.all(responses.map((response) => response.json()));
     const ids = responsesJSON.map((response) => response.id);
     const url = "https://assets.pokemon.com/assets/cms2/img/pokedex/full/";
@@ -238,24 +253,34 @@ const getEvoChain = async (responseJSON) => {
         if(id < 10) {
             return {
                 image: url + `00${id}.png`,
-                name: names[index],
+                name: namesUnchained[index],
                 id: id
             }
         } 
         if(id < 100) {
             return {
                 image: url + `0${id}.png`,
-                name: names[index],
+                name: namesUnchained[index],
                 id: id
             }
         }
         return {
             image: url + `${id}.png`,
-            name: names[index],
+            name: namesUnchained[index],
             id: id
         }
     })
-    return images;
+    let nameArrSizes = names.map((namesArr) => namesArr.length);
+    let index = 0;
+    let chainedInfo = nameArrSizes.map((size) => {
+        let arr = [];
+        for(let i = 0; i < size; i++) {
+            arr.push(images[index]);
+            index++;
+        }
+        return arr;
+    })
+    return chainedInfo;
 }
 
 app.get("/evolution-info/:name", async (req, res) => {
@@ -293,7 +318,7 @@ app.get("/evolution-info/:name", async (req, res) => {
                 evolutionChain: evoChain
             }
             //Set evo chain info in firebase since it wasnt there
-            await db.collection("evolution-chains").doc(name).set(evoChainObj);
+            //let responseDB = await db.collection("evolution-chains").doc(name).set(evoChainObj);
             res.status(200).json(evoChainObj);
         } else if(response.status === 404) {
             res.status(404).json({"Error": `Cannot find evolution chain for ${name}`})
