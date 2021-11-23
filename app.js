@@ -29,37 +29,23 @@ app.get('/', (req, res) => {
 })
 
 // Extracts the object to be returned by the pokemonInfo endpoint
-const setPokemonInfoObject = (responsesJSON, id) => {
-    let stats = responsesJSON[1].stats;
+const setPokemonInfoObject = (responseJSON, id) => {
+    let stats = responseJSON.stats;
     let baseStats = stats.map((stat) => stat.base_stat);
-    let abilities = responsesJSON[1].abilities;
+    let abilities = responseJSON.abilities;
     let baseAbilities = abilities.map((ability) => {return {name: ability.ability.name, hidden: ability.is_hidden}})
-    let moves = responsesJSON[1].moves;
+    let moves = responseJSON.moves;
     let pokemonInfoObj;
-    if(id <= 807) {
-        pokemonInfoObj = {
-            height: responsesJSON[1].height,
-            weight: responsesJSON[1].weight,
-            name: responsesJSON[1].name,
-            moves: moves,
-            stats: baseStats,
-            abilities: baseAbilities,
-            types: responsesJSON[0][0].types,
-            description: responsesJSON[0][0].description ? responsesJSON[0][0].description : "",
-            sprites: responsesJSON[0][0].sprite
-        }
-    } else {
-        let types = responsesJSON[1].types.map((type) => type.type.name);
-        pokemonInfoObj = {
-            height: responsesJSON[1].height ? responsesJSON[1].height : "",
-            weight: responsesJSON[1].weight ? responsesJSON[1].weight : "",
-            name: responsesJSON[1].name ? responsesJSON[1].name : "",
-            moves: moves,
-            sprites: `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${id}.png`,
-            stats: baseStats ? baseStats : "",
-            abilities: baseAbilities ? baseAbilities : "",
-            types: types ? types : ""
-        }
+    let types = responseJSON.types.map((type) => type.type.name);
+    pokemonInfoObj = {
+        height: responseJSON.height,
+        weight: responseJSON.weight,
+        name: responseJSON.name,
+        moves: moves,
+        stats: baseStats,
+        abilities: baseAbilities,
+        types: types,
+        sprites: `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${id < 10 ? `00${id}`: (id < 100 ? `0${id}` : id)}.png`
     }
     return pokemonInfoObj;
 }
@@ -147,16 +133,16 @@ app.get('/pokemon/:id', async (req, res) => {
             return;
         } 
         //If not in firebase, make api requests
-        let urls = [`https://pokeapi.glitch.me/v1/pokemon/${id}`,`https://pokeapi.co/api/v2/pokemon/${id}`]
-        let responses = await Promise.all(urls.map((url) => fetch(url)));
-        if(responses[1].status === 200) {
-            let responsesJSON = await Promise.all(responses.map((response) => response.json()));
+        let url = `https://pokeapi.co/api/v2/pokemon/${id}`
+        let response = await fetch(url);
+        if(response.status === 200) {
+            let responseJSON = await response.json();
             //Get pokemon info object from api responses
-            const pokemonInfoObj = setPokemonInfoObject(responsesJSON, id);
+            const pokemonInfoObj = setPokemonInfoObject(responseJSON, id);
             //Set pokemon info in firebase since it wasnt there
             await db.collection("pokemon-info").doc(id).set(pokemonInfoObj);
             res.status(200).json(pokemonInfoObj);
-        } else if(responses[1].status === 404) {
+        } else if(response.status === 404) {
             res.status(404).json({"Error": `Cannot find pokemon info`})
         } 
     } catch(e) {
@@ -245,6 +231,82 @@ const getEvoChain = async (responseJSON) => {
     if(namesUnchained.includes("urshifu")) {
         namesUnchained[namesUnchained.indexOf("urshifu")] = "urshifu-single-strike";
     }
+    if(namesUnchained.includes("deoxys")) {
+        namesUnchained[namesUnchained.indexOf("deoxys")] = "deoxys-normal";
+    }
+    if(namesUnchained.includes("wormadam")) {
+        namesUnchained[namesUnchained.indexOf("wormadam")] = "wormadam-plant";
+    }
+    if(namesUnchained.includes("giratina")) {
+        namesUnchained[namesUnchained.indexOf("giratina")] = "giratina-altered";
+    }
+    if(namesUnchained.includes("shaymin")) {
+        namesUnchained[namesUnchained.indexOf("shaymin")] = "shaymin-land";
+    }
+    if(namesUnchained.includes("basculin")) {
+        namesUnchained[namesUnchained.indexOf("basculin")] = "basculin-red-striped";
+    }
+    if(namesUnchained.includes("darmanitan")) {
+        namesUnchained[namesUnchained.indexOf("darmanitan")] = "darmanitan-standard";
+    }
+    if(namesUnchained.includes("thundurus")) {
+        namesUnchained[namesUnchained.indexOf("thundurus")] = "thundurus-incarnate";
+    }
+    if(namesUnchained.includes("tornadus")) {
+        namesUnchained[namesUnchained.indexOf("tornadus")] = "tornadus-incarnate";
+    }
+    if(namesUnchained.includes("landorus")) {
+        namesUnchained[namesUnchained.indexOf("landorus")] = "landorus-incarnate";
+    }
+    if(namesUnchained.includes("meowstic")) {
+        namesUnchained[namesUnchained.indexOf("meowstic")] = "meowstic-male";
+    }
+    if(namesUnchained.includes("pumpkaboo")) {
+        namesUnchained[namesUnchained.indexOf("pumpkaboo")] = "pumpkaboo-average";
+    }
+    if(namesUnchained.includes("gourgeist")) {
+        namesUnchained[namesUnchained.indexOf("gourgeist")] = "gourgeist-average";
+    }
+    if(namesUnchained.includes("oricorio")) {
+        namesUnchained[namesUnchained.indexOf("oricorio")] = "oricorio-baile";
+    }
+    if(namesUnchained.includes("lycanroc")) {
+        namesUnchained[namesUnchained.indexOf("lycanroc")] = "lycanroc-midday";
+    }
+    if(namesUnchained.includes("wishiwashi")) {
+        namesUnchained[namesUnchained.indexOf("wishiwashi")] = "wishiwashi-solo";
+    }
+    if(namesUnchained.includes("minior")) {
+        namesUnchained[namesUnchained.indexOf("minior")] = "minior-red-meteor";
+    }
+    if(namesUnchained.includes("mimikyu")) {
+        namesUnchained[namesUnchained.indexOf("mimikyu")] = "mimikyu-disguised";
+    }
+    if(namesUnchained.includes("toxtricity")) {
+        namesUnchained[namesUnchained.indexOf("toxtricity")] = "toxtricity-amped";
+    }
+    if(namesUnchained.includes("eiscue")) {
+        namesUnchained[namesUnchained.indexOf("eiscue")] = "eiscue-ice";
+    }
+    if(namesUnchained.includes("indeedee")) {
+        namesUnchained[namesUnchained.indexOf("indeedee")] = "indeedee-male";
+    }
+    if(namesUnchained.includes("zacian")) {
+        namesUnchained[namesUnchained.indexOf("zacian")] = "zacian-hero";
+    }
+    if(namesUnchained.includes("zamazenta")) {
+        namesUnchained[namesUnchained.indexOf("zamazenta")] = "zamazenta-hero";
+    }
+    if(namesUnchained.includes("meloetta")) {
+        namesUnchained[namesUnchained.indexOf("meloetta")] = "meloetta-aria";
+    }
+    if(namesUnchained.includes("aegislash")) {
+        namesUnchained[namesUnchained.indexOf("aegislash")] = "aegislash-shield";
+    }
+    if(namesUnchained.includes("keldeo")) {
+        namesUnchained[namesUnchained.indexOf("keldeo")] = "keldeo-ordinary";
+    }
+
     let responses = await Promise.all(namesUnchained.map((name) => fetch(`https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`)));
     const responsesJSON = await Promise.all(responses.map((response) => response.json()));
     const ids = responsesJSON.map((response) => response.id);

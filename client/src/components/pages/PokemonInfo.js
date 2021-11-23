@@ -82,7 +82,7 @@ const PokemonInfo = () => {
                 setIsLoaded(true)
             }
         });
-        fetch(`/evolution-info/${id}`).then((response) => {
+        fetch(`/evolution-info/${name.trim().toLowerCase()}`).then((response) => {
             return response.json()
         }).then((responseJSON) => {
             setTimeout(() => {
@@ -96,7 +96,7 @@ const PokemonInfo = () => {
         return () => {
             mounted = false;
         }
-    }, [id,history])
+    }, [id,history,name])
 
     // Handles navigation for the next pokemon button
     const handleNext = () => {
