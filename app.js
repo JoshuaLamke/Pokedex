@@ -289,7 +289,9 @@ app.get("/evolution-info/:name", async (req, res) => {
         //Check firebase first for data
         const evolutionChain = await db.collection("evolution-chains").doc(name).get();
         if(evolutionChain.exists) {
-            res.status(200).json(evolutionChain.data());
+            let data = evolutionChain.data();
+            data.evolutionChain = data.evolutionChain.map((data) => data.arr);
+            res.status(200).json(data);
             return;
         } 
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${name}`);
@@ -318,7 +320,7 @@ app.get("/evolution-info/:name", async (req, res) => {
                 evolutionChain: evoChain
             }
             //Set evo chain info in firebase since it wasnt there
-            //let responseDB = await db.collection("evolution-chains").doc(name).set(evoChainObj);
+            await db.collection("evolution-chains").doc(name).set({...evoChainObj, evolutionChain: evoChain.map((arr) => {return {arr}})});
             res.status(200).json(evoChainObj);
         } else if(response.status === 404) {
             res.status(404).json({"Error": `Cannot find evolution chain for ${name}`})
