@@ -8,30 +8,13 @@
     cursor: pointer;
 }
 
-#card {
-    -webkit-animation: card-mover 2s ease-in-out infinite alternate;
-    animation: card-mover 2s ease-in-out infinite alternate;
-}
-
 #card:hover {
-    -webkit-animation: none;
-    animation: none;
     transform: scale(1.03);
 }
 
 .page-button:hover {
     background: rgb(237,41,57)!important;
     color: whitesmoke;
-}
-
-@-webkit-keyframes card-mover {
-    0% { transform: translateY(0px); }
-    100% { transform: translateY(-3px); }
-}
-
-@keyframes card-mover {
-    0% { transform: translateY(0px); }
-    100% { transform: translateY(-3px); }
 }
 
 @media Screen and (min-width: 500px) {
